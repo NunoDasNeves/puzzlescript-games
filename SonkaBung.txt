@@ -1,0 +1,272 @@
+title SonkaBung
+author Nuno Das Neves
+homepage www.puzzlescript.net
+
+========
+OBJECTS
+========
+
+Background 
+lightgray lightblue
+00000
+00000
+00100
+00000
+00000
+
+Wall
+purple darkblue blue
+11111
+11111
+11111
+11111
+11111
+
+WallLeft
+purple darkblue blue
+11112
+11112
+11112
+11112
+11112
+
+WallRight
+purple darkblue blue
+21111
+21111
+21111
+21111
+21111
+
+WallTop
+purple darkblue blue
+11111
+11111
+11111
+11111
+00000
+
+WallExtLeftTop
+purple darkblue blue
+11112
+11112
+11112
+11112
+00000
+
+WallExtRightTop
+purple darkblue blue
+21111
+21111
+21111
+21111
+00000
+
+WallIntLeftTop
+purple darkblue blue
+11111
+11111
+11111
+11111
+11112
+
+WallIntRightTop
+purple darkblue blue
+11111
+11111
+11111
+11111
+21111
+
+Target 
+Red
+.....
+.0.0.
+..0..
+.0.0.
+.....
+
+Hole
+black darkgray grey
+11111
+21111
+22111
+22200
+22200
+
+PlayerDown
+blue white orange red
+.111.
+.333.
+01210
+20102
+.000.
+
+PlayerLeft
+blue white orange red
+.111.
+.333.
+.210.
+1102.
+.000.
+
+PlayerRight
+blue white orange red
+.111.
+.333.
+.012.
+.2011
+.000.
+
+PlayerUp
+blue white orange red
+.111.
+.333.
+00000
+20002
+.000.
+
+Crate1
+Orange lightbrown brown
+00000
+01110
+01110
+01110
+00000
+
+Crate2
+Orange lightbrown brown
+00000
+02210
+02110
+02122
+00000
+
+CrateDestroyed
+Orange LightBrown brown
+.0...
+..10.
+2....
+11.2.
+...10
+
+FilledHole
+Orange darkgray lightbrown grey
+11111
+30000
+30222
+30222
+30222
+
+=======
+LEGEND
+=======
+
+Static = Wall or WallRight or WallLeft or WallTop or WallExtLeftTop or WallIntLeftTop or WallIntRightTop or WallExtRightTop
+Player = PlayerDown or PlayerLeft or PlayerRight or PlayerUp
+Crate = Crate1 or Crate2
+Solid = Static or Crate or Player
+
+. = Background
+# = Wall
+/ = WallLeft
+\ = WallRight
+- = WallTop
+L = WallExtLeftTop
+R = WallExtRightTop
+' = WallIntLeftTop
+` = WallIntRightTop
+P = PlayerRight
+* = Crate1
+Q = FilledHole
+O = Hole
+X = Target
+@ = Crate1 and Target
+& = PlayerRight and Target
+
+=======
+SOUNDS
+=======
+
+================
+COLLISIONLAYERS
+================
+
+Background
+Target, FilledHole, Hole
+CrateDestroyed
+Player, Static, Crate
+
+======
+RULES     
+======     
+
+[ UP Player ] -> [ UP PlayerUp ]
+[ DOWN Player ] -> [ DOWN PlayerDown ]
+[ LEFT Player ] -> [ LEFT PlayerLeft ]
+[ RIGHT Player ] -> [ RIGHT PlayerRight ]
+[ > Player | Hole ] -> cancel
+
+[ > Player | Crate ] -> [ > Player | > Crate ]
+
+
+late [ Crate Hole ] -> [ FilledHole ]
+
+==============
+WINCONDITIONS
+==============
+
+All Target on Crate     
+
+=======     
+LEVELS
+=======
+
+'-------`
+/.......\
+/......X\
+/..*....\
+/.P.....\
+#########
+
+
+'---`#
+/...\#
+/.L.\#
+/.*.\#
+/.L.R`
+/P..X\
+######
+
+##'---`
+#'L...\
+#/....\
+'L*L..\
+/.X@XR`
+/.*L..\
+/.P...\
+#######
+
+#'----`##
+#/O...R-`
+'L*RL.*.\
+/XPO*...\
+#########
+
+'-------`
+/..OXO..\
+/O..RL.O\
+/.*..O*.\
+/.*#.*P.\
+/.......\
+#########
+
+#######'---`#
+'------L...R`
+/.*O*.*O.*.O\
+/..O*..O.**O\
+/OOOOOOOOOOO\
+/X*O.*O*.O*.\
+/P.O..O..O..\
+#############
+
