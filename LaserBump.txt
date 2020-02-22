@@ -1,0 +1,451 @@
+title LaserBump
+author Nuno Das Neves
+homepage www.puzzlescript.net
+
+again_interval 0.0
+run_rules_on_level_start
+
+========
+OBJECTS
+========
+
+Background 
+lightblue
+ 
+
+Wall 
+darkgray
+
+Player 
+brown orange lightbrown darkblue
+.201.
+20012
+21111
+.3111
+.3.31
+
+DeadPlayer
+gray white darkgray
+.010.
+11011
+12121
+.101.
+.1.1.
+
+
+LaserGunL
+gray darkgray red lightred lightgray
+...00
+34441
+21110
+33111
+...11
+
+LaserGunR
+gray darkgray red lightred lightgray
+00...
+04413
+01112
+11133
+11...
+
+LaserGunU
+gray darkgray red lightred lightgray
+.323.
+.341.
+.141.
+04411
+01111
+
+LaserGunD
+gray darkgray red lightred lightgray
+11111
+00411
+.141.
+.341.
+.323.
+
+
+LaserV
+red lightred
+.101.
+.101.
+.101.
+.101.
+.101.
+
+LaserH
+red lightred
+.....
+11111
+00000
+11111
+.....
+
+LaserRHit
+red lightred
+...1.
+11000
+00101
+111.0
+...1.
+
+LaserLHit
+red lightred
+.1...
+01011
+10100
+0.111
+.1...
+
+LaserUHit
+red lightred
+.010.
+1.011
+.110.
+.101.
+.101.
+
+LaserDHit
+red lightred
+.101.
+.101.
+.011.
+110.1
+.010.
+
+LaserCross
+red lightred
+.101.
+11011
+00000
+11011
+.101.
+
+Bridge
+gray darkgray
+01.10
+10001
+.000.
+10001
+01.10
+
+Box
+darkgray darkgreen
+11111
+11111
+11011
+11111
+11111
+
+BoxOnBridge
+darkgray darkgreen
+11111
+11111
+11011
+11111
+11111
+
+ReflectDR
+gray darkgreen
+....0
+...01
+..011
+.0111
+01111
+
+ReflectDROnBridge
+gray darkgreen
+....0
+...01
+..011
+.0111
+01111
+
+
+ReflectDRHit
+gray darkgreen red lightred
+33230
+32301
+23011
+30111
+01111
+
+ReflectDL
+gray darkgreen
+0....
+10...
+110..
+1110.
+11110
+
+ReflectDLOnBridge
+gray darkgreen
+0....
+10...
+110..
+1110.
+11110
+
+ReflectDLHit
+gray darkgreen red lightred
+03233
+10323
+11032
+11103
+11110
+
+ReflectUR
+gray darkgreen
+01111
+.0111
+..011
+...01
+....0
+
+ReflectUROnBridge
+gray darkgreen
+01111
+.0111
+..011
+...01
+....0
+
+ReflectURHit
+gray darkgreen red lightred
+01111
+30111
+23011
+32301
+33230
+
+ReflectUL
+gray darkgreen
+11110
+1110.
+110..
+10...
+0....
+
+ReflectULOnBridge
+gray darkgreen
+11110
+1110.
+110..
+10...
+0....
+
+ReflectULHit
+gray darkgreen red lightred
+11110
+11103
+11032
+10323
+03233
+
+
+End
+yellow orange blue
+.010.
+02220
+12221
+02220
+02220
+
+=======
+LEGEND
+=======
+
+LaserGun = LaserGunR or LaserGunL or LaserGunU or LaserGunD
+LaserGunH = LaserGunR or LaserGunL
+LaserGunV = LaserGunU or LaserGunD
+
+(Hit or regular laser, used for bridge)
+LaserHAny = LaserH or LaserRHit or LaserLHit
+LaserVAny = LaserV or LaserUHit or LaserDHit
+
+Laser = LaserH or LaserRHit or LaserLHit or LaserV or LaserUHit or LaserDHit or LaserCross
+Reflector = ReflectDR or ReflectDRHit or ReflectDL or ReflectDLHit or ReflectUR or ReflectURHit or ReflectUL or ReflectULHit
+
+ReflectRHit = ReflectDRHit or ReflectURHit
+ReflectLHit = ReflectDLHit or ReflectULHit
+ReflectUHit = ReflectURHit or ReflectULHit
+ReflectDHit = ReflectDRHit or ReflectDLHit
+
+ReflectOnBridge = ReflectDROnBridge or ReflectDLOnBridge or ReflectUROnBridge or ReflectULOnBridge
+
+Solid = LaserGun or Wall or Box or DeadPlayer or Reflector
+Pushable = LaserGun or Box or BoxOnBridge or Reflector or ReflectOnBridge
+
+
+. = Background
+# = Wall
+P = Player
+R = LaserGunR
+L = LaserGunL
+U = LaserGunU
+D = LaserGunD
+* = Box
+/ = ReflectDR
+\ = ReflectDL
+% = ReflectUR
+& = ReflectUL
+B = Bridge
+E = End
+
+=======
+SOUNDS
+=======
+
+================
+COLLISIONLAYERS
+================
+
+Background
+End
+LaserHAny
+LaserVAny
+LaserCross
+Bridge
+BoxOnBridge, ReflectOnBridge
+Player, DeadPlayer, Wall, LaserGun, Box, Reflector
+
+======
+RULES     
+======
+
+[ > Player | Pushable ] -> [ Player | > Pushable ]
+
+(Bridge Movement)
+horizontal [ > Player Bridge LaserHAny | LaserHAny ] -> [ > Player > Bridge LaserHAny | LaserHAny ]
+vertical [ > Player Bridge LaserVAny | LaserVAny ] -> [ > Player > Bridge LaserVAny | LaserVAny ]
+[ > Player Bridge Laser | LaserCross ] -> [ > Player > Bridge Laser | LaserCross ]
+[ > Player Bridge LaserCross | Laser ] -> [ > Player > Bridge LaserCross | Laser ]
+
+
+
+
+(Late)
+
+(Kill player)
+(late [ Player No Bridge Laser ] -> [ DeadPlayer No Bridge Laser ])
+
+
+(Remove lasers)
+late [ Laser ] -> [ ]
+late [ ReflectDRHit ] -> [ ReflectDR ]
+late [ ReflectDLHit ] -> [ ReflectDL ]
+late [ ReflectURHit ] -> [ ReflectUR ]
+late [ ReflectULHit ] -> [ ReflectUL ]
+
+(Pushables on Bridge)
+late [ Box Bridge ] -> [ BoxOnBridge Bridge ]
+late [ BoxOnBridge No Bridge ] -> [ Box No Bridge ]
+
+late [ ReflectDR Bridge ] -> [ ReflectDROnBridge Bridge ]
+late [ ReflectDROnBridge No Bridge ] -> [ ReflectDR No Bridge ]
+late [ ReflectDL Bridge ] -> [ ReflectDLOnBridge Bridge ]
+late [ ReflectDLOnBridge No Bridge ] -> [ ReflectDL No Bridge ]
+late [ ReflectUR Bridge ] -> [ ReflectUROnBridge Bridge ]
+late [ ReflectUROnBridge No Bridge ] -> [ ReflectUR No Bridge ]
+late [ ReflectUL Bridge ] -> [ ReflectULOnBridge Bridge ]
+late [ ReflectULOnBridge No Bridge ] -> [ ReflectUL No Bridge ]
+
+(Start lasers from laser guns)
+
+late left [ LaserGunL | No Solid ] -> [ LaserGunL | LaserH ]
+late left [ LaserGunL | ReflectDL ] -> [ LaserGunL | ReflectDLHit ]
+late left [ LaserGunL | ReflectUL ] -> [ LaserGunL | ReflectULHit ]
+late right [ LaserGunR | No Solid ] -> [ LaserGunR | LaserH ]
+late right [ LaserGunR | ReflectDR ] -> [ LaserGunR | ReflectDRHit ]
+late right [ LaserGunR | ReflectUR ] -> [ LaserGunR | ReflectURHit ]
+
+late up [ LaserGunU | No Solid ] -> [ LaserGunU | LaserV ]
+late up [ LaserGunU | ReflectUR ] -> [ LaserGunU | ReflectURHit ]
+late up [ LaserGunU | ReflectUL ] -> [ LaserGunU | ReflectULHit ]
+late down [ LaserGunD | No Solid ] -> [ LaserGunD | LaserV ]
+late down [ LaserGunD | ReflectDR ] -> [ LaserGunD | ReflectDRHit ]
+late down [ LaserGunD | ReflectDL ] -> [ LaserGunD | ReflectDLHit ]
+
+(Propagate lasers)
+startloop
+	(Kill player - bit of a hack using again for now...)
+	late [ Player No Bridge Laser ] -> [ DeadPlayer No Bridge Laser ] again
+	
+    ( propagate lasers horiz and vert)
+	late horizontal [ LaserH | No Solid ] -> [ LaserH | LaserH ]
+	late vertical [ LaserV | No Solid ] -> [ LaserV | LaserV ]
+    
+    ( turn reflectors into hit reflectors )
+    late right [ LaserH | ReflectDR ] -> [ LaserH | ReflectDRHit ]
+    late right [ LaserH | ReflectUR ] -> [ LaserH | ReflectURHit ]
+    late left [ LaserH | ReflectDL ] -> [ LaserH | ReflectDLHit ]
+    late left [ LaserH | ReflectUL ] -> [ LaserH | ReflectULHit ]
+    
+    late up [ LaserV | ReflectUR ] -> [ LaserV | ReflectURHit ]
+    late up [ LaserV | ReflectUL ] -> [ LaserV | ReflectULHit ]
+    late down [ LaserV | ReflectDR ] -> [ LaserV | ReflectDRHit ]
+    late down [ LaserV | ReflectDL ] -> [ LaserV | ReflectDLHit ]
+    
+    ( hit reflectors propagate to directly adjacent hit reflectors )
+    late left [ ReflectRHit | ReflectDL ] -> [ ReflectRHit | ReflectDLHit ]
+    late left [ ReflectRHit | ReflectUL ] -> [ ReflectRHit | ReflectULHit ]
+    late right [ ReflectLHit | ReflectDR ] -> [ ReflectLHit | ReflectDRHit ]
+    late right [ ReflectLHit | ReflectUR ] -> [ ReflectLHit | ReflectURHit ]
+    
+    late down [ ReflectUHit | ReflectDR ] -> [ ReflectUHit | ReflectDRHit ]
+    late down [ ReflectUHit | ReflectDL ] -> [ ReflectUHit | ReflectDLHit ]
+    late up [ ReflectDHit | ReflectUR ] -> [ ReflectDHit | ReflectURHit ]
+    late up [ ReflectDHit | ReflectUL ] -> [ ReflectDHit | ReflectULHit ]
+    
+    ( propagate new lasers from hit reflectors )
+    late right [ No LaserH No Solid | ReflectRHit ] -> [ LaserH | ReflectRHit ]
+    late left [ No LaserH No Solid | ReflectLHit ] -> [ LaserH | ReflectLHit ]
+    late up [ No LaserV No Solid | ReflectUHit ] -> [ LaserV | ReflectUHit ]
+    late down [ No LaserV No Solid | ReflectDHit ] -> [ LaserV | ReflectDHit ]
+
+endloop
+
+(Laser Hit and Cross (aesthetic))
+( TODO lasercross hit )
+late [ LaserH LaserV ] -> [ LaserCross ]
+
+late right [ LaserH | Solid No LaserGunL No ReflectRHit ] -> [ LaserRHit | Solid No LaserGunL No ReflectRHit ]
+late left [ LaserH | Solid No LaserGunR No ReflectLHit ] -> [ LaserLHit | Solid No LaserGunR  No ReflectLHit ]
+
+late up [ LaserV | Solid No LaserGunD No ReflectUHit ] -> [ LaserUHit | Solid No LaserGunD No ReflectUHit ]
+late down [ LaserV | Solid No LaserGunU No ReflectDHit ] -> [ LaserDHit | Solid No LaserGunU No ReflectDHit ]
+
+
+
+
+
+==============
+WINCONDITIONS
+==============
+
+Some Player on End   
+
+=======     
+LEVELS
+=======
+
+#######################
+#....D..........D.....#
+#...................###
+#...................###
+#................######
+#R.B............L######
+#.....................#
+#../..................#
+#........\............#
+#.P...................#
+#.........&...........#
+#..*..................#
+#....B..%.............#
+#....B............E...#
+#R....................#
+#........*............#
+#....................L#
+#..........U..........#
+#######################
