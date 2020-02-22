@@ -1,0 +1,264 @@
+title My Game
+author My Name Here
+homepage www.puzzlescript.net
+
+run_rules_on_level_start
+
+========
+OBJECTS
+========
+
+Background 
+lightblue
+ 
+
+Wall 
+darkgray
+
+Player 
+brown orange lightbrown darkblue
+.201.
+20012
+21111
+.3111
+.3.31
+
+DeadPlayer
+gray white darkgray
+.010.
+11011
+12121
+.101.
+.1.1.
+
+
+LaserGunL
+gray darkgray red lightred lightgray
+...00
+34441
+21110
+33111
+...11
+
+LaserGunR
+gray darkgray red lightred lightgray
+00...
+04413
+01112
+11133
+11...
+
+LaserGunU
+gray darkgray red lightred lightgray
+.323.
+.341.
+.141.
+04411
+01111
+
+LaserGunD
+gray darkgray red lightred lightgray
+11111
+00411
+.141.
+.341.
+.323.
+
+
+LaserV
+red lightred
+.101.
+.101.
+.101.
+.101.
+.101.
+
+LaserH
+red lightred
+.....
+11111
+00000
+11111
+.....
+
+LaserRHit
+red lightred
+...1.
+11000
+00101
+111.0
+...1.
+
+LaserLHit
+red lightred
+.1...
+01011
+10100
+0.111
+.1...
+
+LaserUHit
+red lightred
+.010.
+1.011
+.110.
+.101.
+.101.
+
+LaserDHit
+red lightred
+.101.
+.101.
+.011.
+110.1
+.010.
+
+LaserCross
+red lightred
+.0.1.
+11001
+11.00
+1.01.
+.10..
+
+Bridge
+gray darkgray
+01.10
+10001
+.000.
+10001
+01.10
+
+Box
+darkgray darkgreen
+11111
+11111
+11011
+11111
+11111
+
+BoxOnBridge
+darkgray darkgreen
+11111
+11111
+11011
+11111
+11111
+
+End
+yellow orange
+.010.
+01100
+01110
+00100
+.000.
+
+=======
+LEGEND
+=======
+
+LaserGun = LaserGunR or LaserGunL or LaserGunU or LaserGunD
+LaserGunH = LaserGunR or LaserGunL
+LaserGunV = LaserGunU or LaserGunD
+
+Laser = LaserH or LaserRHit or LaserLHit or LaserV or LaserUHit or LaserDHit or LaserCross
+
+Solid = LaserGun or Wall or Box or DeadPlayer
+Pushable = LaserGun or Box or BoxOnBridge
+
+
+. = Background
+# = Wall
+P = Player
+R = LaserGunR
+L = LaserGunL
+U = LaserGunU
+D = LaserGunD
+* = Box
+B = Bridge
+E = End
+
+=======
+SOUNDS
+=======
+
+================
+COLLISIONLAYERS
+================
+
+Background
+End
+Laser
+Bridge
+BoxOnBridge
+Player, DeadPlayer, Wall, LaserGun, Box
+
+======
+RULES     
+======
+
+[ > Player | Pushable ] -> [ Player | > Pushable ]
+
+[ > Player Bridge Laser | Laser ] -> [ > Player > Bridge Laser | Laser ]
+
+late [ Player No Bridge Laser ] -> [ DeadPlayer No Bridge Laser ]
+
+(Box on bridge)
+late [ Box Bridge ] -> [ BoxOnBridge Bridge ]
+late [ BoxOnBridge No Bridge ] -> [ Box No Bridge ]
+
+(Remove lasers)
+
+late [ Laser ] -> [ ]
+
+(Add lasers)
+late left [ LaserGunL | No Solid ] -> [ LaserGunL | LaserH ]
+late right [ LaserGunR | No Solid ] -> [ LaserGunR | LaserH ]
+late horizontal [ LaserH | No Solid ] -> [ LaserH | LaserH ]
+
+late up [ LaserGunU | No Solid ] -> [ LaserGunU | LaserV ]
+late down [ LaserGunD | No Solid ] -> [ LaserGunD | LaserV ]
+late vertical [ LaserV | No Solid ] -> [ LaserV | LaserV ]
+
+(Laser Hit and cross (aesthetic))
+late horizontal [ LaserH | LaserV ] -> [ LaserH | LaserCross ]
+
+late right [ LaserH | Solid No LaserGunL ] -> [ LaserRHit | Solid No LaserGunL ]
+late left [ LaserH | Solid No LaserGunR ] -> [ LaserLHit | Solid No LaserGunR ]
+
+late up [ LaserV | Solid No LaserGunD ] -> [ LaserUHit | Solid No LaserGunD ]
+late down [ LaserV | Solid No LaserGunU ] -> [ LaserDHit | Solid No LaserGunU ]
+
+
+
+
+==============
+WINCONDITIONS
+==============
+
+Some Player on End   
+
+=======     
+LEVELS
+=======
+
+#######################
+#....D..........D.....#
+#...................###
+#...................###
+#................######
+#R.B............L######
+#.....................#
+#.....................#
+#.....................#
+#.P...................#
+#.....................#
+#..*..................#
+#....B................#
+#....B..........L.....#
+#.....................#
+#........*............#
+#.....................#
+#..........U..........#
+#######################
+
