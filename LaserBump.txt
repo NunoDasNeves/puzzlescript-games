@@ -14,7 +14,12 @@ lightblue
  
 
 Wall 
-darkgray
+darkbrown darkgray
+11001
+00000
+01111
+00000
+11011
 
 Player 
 brown orange lightbrown darkblue
@@ -34,32 +39,32 @@ gray white darkgray
 
 
 LaserGunL
-gray darkgray red lightred lightgray
-...00
-34441
-21110
-33111
-...11
+gray darkgray red lightred lightgray darkgreen
+...05
+34445
+21115
+33115
+...15
 
 LaserGunR
-gray darkgray red lightred lightgray
-00...
-04413
-01112
-11133
-11...
+gray darkgray red lightred lightgray darkgreen
+50...
+54413
+51112
+51133
+51...
 
 LaserGunU
-gray darkgray red lightred lightgray
+gray darkgray red lightred lightgray darkgreen
 .323.
 .341.
 .141.
 04411
-01111
+55555
 
 LaserGunD
-gray darkgray red lightred lightgray
-11111
+gray darkgray red lightred lightgray darkgreen
+55555
 00411
 .141.
 .341.
@@ -131,19 +136,19 @@ gray darkgray
 01.10
 
 Box
-darkgray darkgreen
+darkgray darkgreen gray
 11111
-11111
-11011
-11111
+12221
+12021
+12221
 11111
 
 BoxOnBridge
-darkgray darkgreen
+darkgray darkgreen gray
 11111
-11111
-11011
-11111
+12221
+12021
+12221
 11111
 
 ReflectDR
@@ -288,8 +293,8 @@ D = LaserGunD
 * = Box
 / = ReflectDR
 \ = ReflectDL
-% = ReflectUR
-& = ReflectUL
+& = ReflectUR
+% = ReflectUL
 B = Bridge
 E = End
 
@@ -424,11 +429,98 @@ late down [ LaserV | Solid No LaserGunU No ReflectDHit ] -> [ LaserDHit | Solid 
 WINCONDITIONS
 ==============
 
-Some Player on End   
+Some Player on End 
 
 =======     
 LEVELS
 =======
+
+message PushyPushy
+
+###########
+#...D..D###
+#.E.....*.#
+#.......P.#
+###########
+
+message Bridge
+
+#########
+##E######
+##.....L#
+#R...B..#
+#.......#
+#...*...#
+######..#
+#.B....L#
+#P.######
+#########
+
+message PushyBridge
+
+##########
+##.......#
+##......L#
+#RB*.....#
+#...###..#
+#.P.###..#
+#R.......#
+##......E#
+##########
+
+message Crossing
+
+###########
+#...D.#####
+#P.B..#E###
+#.*...#.###
+#.....#..L#
+#R........#
+##...##...#
+##...##...#
+###########
+
+message Surf's Up!
+
+###########
+#..D.######
+#.........#
+#.#.#b...L#
+#.#.#p#...#
+#.#.###U###
+#.#.##.*.##
+#.#......L#
+#.#####.###
+#.####.*.##
+R.......###
+##R.......#
+#######.#E#
+###########
+
+message Reflect
+
+####D###
+#......#
+#.....E#
+#.*...##
+#......#
+#..\..L#
+#P.....#
+########
+
+message Shuffle
+
+###D###
+#....E#
+#.&..##
+#.....#
+#.....#
+#.\..L#
+#P....#
+#######
+
+message Sandbox
+
 
 #######################
 #....D..........D.....#
@@ -449,3 +541,4 @@ LEVELS
 #....................L#
 #..........U..........#
 #######################
+
