@@ -1,0 +1,282 @@
+title Digirrigation
+author Nuno
+homepage https://nunodasneves.com
+run_rules_on_level_start
+debug
+
+========
+OBJECTS
+========
+
+player_d p
+lightred black orange darkbrown red
+.222.
+33333
+.040.
+.333.
+.3.3.
+
+player_u
+lightred black orange darkbrown red
+.222.
+32223
+33333
+.333.
+.3.3.
+
+player_r
+lightred black orange darkbrown red
+.222.
+.2333
+3304.
+.333.
+..3..
+
+player_l
+lightred black orange darkbrown red
+.222.
+3332.
+.4033
+.333.
+..3..
+
+dirt_ground .
+lightbrown #eec63f
+00000
+00011
+00000
+01100
+00000
+
+dirt_ground_filled
+lightbrown brown #744402 #ce861f
+03000
+30003
+10000
+13031
+01110
+
+stone_ground =
+gray darkgray
+00000
+00011
+00000
+01100
+00000
+
+hidden_stone +
+transparent
+
+stone_hole
+gray darkgray
+.000.
+00011
+00000
+01100
+.000.
+
+dirt_hole O
+darkbrown black brown transparent
+.200.
+01100
+11110
+11111
+.111.
+
+dirt_pile *
+#ce861f brown #744402 lightbrown
+..00.
+.0000
+30020
+11211
+12222
+
+dirt_pile_initial
+lightbrown brown darkbrown
+.....
+.0110
+01101
+10111
+11111
+
+wall_x #
+darkgray darkbrown
+11111
+11111
+11111
+11111
+11111
+
+wall_d
+darkbrown darkgray
+00000
+00000
+01101
+11111
+11111
+
+water_source
+blue lightblue
+.000.
+10010
+01101
+00100
+.000.
+
+water_flow
+blue lightblue
+.010.
+00000
+00010
+01000
+.000.
+
+hidden_well w
+transparent
+
+water_shutoff
+transparent
+
+=======
+LEGEND
+=======
+
+background = dirt_ground or stone_ground or dirt_ground_filled
+diggable_ground = dirt_ground or dirt_ground_filled
+hole = dirt_hole or water_source or water_flow or stone_hole
+water = water_source or water_flow
+wall = wall_x or wall_d
+pushable = dirt_pile
+player = player_d or player_u or player_r or player_l
+on_ground = player or wall or dirt_pile
+
+=======
+SOUNDS
+=======
+
+================
+COLLISIONLAYERS
+================
+
+background
+dirt_hole water stone_hole
+hidden_well hidden_stone
+water_shutoff
+dirt_pile_initial
+player, wall, dirt_pile
+
+======
+RULES
+======
+
+(level start - walls)
+DOWN [ wall | no wall ] -> [ wall_d | no wall ]
+
+(level start - wells)
+late [ hidden_well stone_ground ] -> [ hidden_well dirt_ground ]
+
+(level start - hidden stone)
+late [ hidden_stone stone_ground ] -> [ hidden_stone dirt_ground ]
+
+(turn with moving)
+RIGHT [ > player ] -> [ > player_r ]
+LEFT [ > player ] -> [ > player_l ]
+UP [ > player ] -> [ > player_u ]
+DOWN [ > player ] -> [ > player_d ]
+
+(
+(turn without moving)
+RIGHT [ > player no player_r] -> [ player_r ]
+LEFT [ > player no player_l ] -> [ player_l ]
+UP [ > player no player_u ] -> [ player_u ]
+DOWN [ > player no player_d ] -> [ player_d ]
+)
+(
+(get off pile)
+[ > player dirt_pile_initial | no on_ground ] -> [ dirt_pile | player ]
+)
+
+(dig hole - dirt pile behind)
+RIGHT [ no on_ground | action player_r | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_r | dirt_hole diggable_ground ]
+LEFT [ no on_ground | action player_l | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_l | dirt_hole diggable_ground ]
+UP [ no on_ground |  action player_u | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_u | dirt_hole diggable_ground ]
+DOWN [ no on_ground | action player_d | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_d | dirt_hole diggable_ground ]
+
+(dig hole - hidden stone)
+RIGHT [ action player_r | diggable_ground no on_ground no hole hidden_stone ] -> [ player_r | stone_hole diggable_ground ]
+LEFT [ action player_l | diggable_ground no on_ground no hole hidden_stone ] -> [ player_l | stone_hole diggable_ground ]
+UP [ action player_u | diggable_ground no on_ground no hole hidden_stone ] -> [ player_u | stone_hole diggable_ground ]
+DOWN [ action player_d | diggable_ground no on_ground no hole hidden_stone ] -> [ player_d | stone_hole diggable_ground ]
+
+(
+(dig hole - end up in hole)
+RIGHT [ action player_r | diggable no on_ground ] -> [ dirt_pile | player_r dirt_hole ]
+LEFT [ action player_l | diggable no on_ground ] -> [ dirt_pile | player_l dirt_hole ]
+UP [ action player_u | diggable no on_ground ] -> [ dirt_pile | player_u dirt_hole ]
+DOWN [ action player_d | diggable no on_ground ] -> [ dirt_pile | player_d dirt_hole ]
+)
+(
+(dig hole - end up on pile)
+RIGHT [ action player_r | diggable no on_ground ] -> [ player_r 
+
+| dirt_hole ]
+LEFT [ action player_l | diggable no on_ground ] -> [ player_l dirt_pile_initial | dirt_hole ]
+UP [ action player_u | diggable no on_ground ] -> [ player_u dirt_pile_initial | dirt_hole ]
+DOWN [ action player_d | diggable no on_ground ] -> [ player_d dirt_pile_initial | dirt_hole ]
+)
+
+(dig pile - onto ground behind)
+RIGHT [ no on_ground | action player_r | dirt_pile ] -> [ dirt_pile | player_r | ]
+LEFT [ no on_ground | action player_l | dirt_pile ] -> [ dirt_pile | player_l | ]
+UP [ no on_ground | action player_u | dirt_pile ] -> [ dirt_pile | player_u | ]
+DOWN [ no on_ground | action player_d | dirt_pile ] -> [ dirt_pile | player_d | ]
+
+(dig pile - to fill hole)
+RIGHT [ dirt_hole | action player_r | dirt_pile ] -> [ dirt_ground_filled | player_r | ]
+LEFT [ dirt_hole | action player_l | dirt_pile ] -> [ dirt_ground_filled | player_l | ]
+UP [ dirt_hole | action player_u | dirt_pile ] -> [ dirt_ground_filled | player_u | ]
+DOWN [ dirt_hole | action player_d | dirt_pile ] -> [ dirt_ground_filled | player_d | ]
+
+(push)
+[ > player | pushable ] -> [ > player | > pushable ]
+
+(fill hole)
+late [ dirt_hole dirt_pile ] -> [ dirt_ground_filled ]
+late [ water dirt_pile ] -> [ dirt_ground_filled water_shutoff ]
+
+(propagate water shutoff)
+late [ water_shutoff | water ] -> [ water_shutoff | water_shutoff dirt_hole ]
+late [ water_shutoff no water ] -> []
+
+(water fills hole)
+late [ hidden_well dirt_hole ] -> [ hidden_well water_source ]
+
+(water fills adjacent holes)
+late [ water | dirt_hole ] -> [ water | water_flow ]
+
+==============
+WINCONDITIONS
+==============
+
+
+=======
+LEVELS
+=======
+
+#################
+#################
+#####======##=###
+#=======..=====##
+#====#=====..=#=#
+#====...====..==#
+#==#=.....==..#=#
+#=##...p......#=#
+#==.w.........#=#
+##=+++........==#
+#===..........==#
+##==........##=##
+##===..=....##=##
+##==.=.====.===##
+##============###
+###=#==######=###
+#################
