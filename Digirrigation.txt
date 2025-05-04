@@ -9,7 +9,7 @@ OBJECTS
 ========
 
 player_d p
-lightred black orange darkbrown red
+lightred black orange purple red
 .222.
 33333
 .040.
@@ -17,7 +17,7 @@ lightred black orange darkbrown red
 .3.3.
 
 player_u
-lightred black orange darkbrown red
+lightred black orange purple red
 .222.
 32223
 33333
@@ -25,7 +25,7 @@ lightred black orange darkbrown red
 .3.3.
 
 player_r
-lightred black orange darkbrown red
+lightred black orange purple red
 .222.
 .2333
 3304.
@@ -33,28 +33,47 @@ lightred black orange darkbrown red
 ..3..
 
 player_l
-lightred black orange darkbrown red
+lightred black orange purple red
 .222.
 3332.
 .4033
 .333.
 ..3..
 
-dirt_ground .
-lightbrown #eec63f
-00000
-00011
-00000
-01100
-00000
+cow c
+darkbrown lightgray
+...0.
+10011
+10110
+1110.
+1010.
 
-dirt_ground_filled
-lightbrown brown #744402 #ce861f
-03000
-30003
-10000
-13031
+tent b
+#eed060 black #36763f
+..0..
+.000.
+.000.
+00100
 01110
+
+wm_door d
+black darkbrown brown
+21112
+.000.
+.000.
+.000.
+.111.
+
+wm_out k
+black darkbrown brown
+12121
+.111.
+.000.
+.111.
+.....
+
+wm_wall [
+#c6c6df
 
 stone_ground =
 gray darkgray
@@ -64,40 +83,249 @@ gray darkgray
 01100
 00000
 
-hidden_stone +
-transparent
-
-stone_hole
-gray darkgray
-.000.
-00011
+sand_ground .
+lightbrown #eec63f
 00000
-01100
+00010
+00000
+01000
+00000
+
+sand_u
+#eec63f
+.0.0.
+.....
+.....
+.....
+.....
+
+sand_d
+#eec63f
+.....
+.....
+.....
+.....
+.0.0.
+
+sand_l
+#eec63f
+.....
+0....
+.....
+0....
+.....
+
+sand_r
+#eec63f
+.....
+....0
+.....
+....0
+.....
+
+dirt_ground ,
+brown #ce861f #744402
+00000
+00010
+00000
+01000
+00000
+
+dirt_u
+brown
+.0.0.
+.....
+.....
+.....
+.....
+
+dirt_d
+brown
+.....
+.....
+.....
+.....
+.0.0.
+
+dirt_l
+brown
+.....
+0....
+.....
+0....
+.....
+
+dirt_r
+brown
+.....
+....0
+.....
+....0
+.....
+
+
+mud_ground '
+#744402 brown
+00000
+00010
+00000
+01000
+00000
+
+mud_u
+brown
+.0.0.
+.....
+.....
+.....
+.....
+
+mud_d
+brown
+.....
+.....
+.....
+.....
+.0.0.
+
+mud_l
+brown
+.....
+0....
+.....
+0....
+.....
+
+mud_r
+brown
+.....
+....0
+.....
+....0
+.....
+
+grass_ground "
+green lightgreen
+00000
+00010
+00000
+01000
+00000
+
+grass_u
+green
+.0.0.
+.....
+.....
+.....
+.....
+
+grass_d
+green
+.....
+.....
+.....
+.....
+.0.0.
+
+grass_l
+green
+.....
+0....
+.....
+0....
+.....
+
+grass_r
+green
+.....
+....0
+.....
+....0
+.....
+
+wheat_seed j
+darkbrown #deb64f brown
+..0..
+.010.
+01210
+01210
 .000.
 
-dirt_hole O
-darkbrown black brown transparent
-.200.
-01100
-11110
-11111
+wheat_sprout
+lightgreen
+.....
+.0.0.
+.....
+..0..
+.....
+
+wheat_sheaf
+black yellow lightbrown brown
 .111.
+12121
+32223
+03230
+.030.
+
+wheat_out
+darkbrown #deb64f
+.....
+..0..
+.010.
+..0..
+.....
+
+hole_x O
+black
+
+hole_fd
+black darkbrown
+11111
+11111
+01001
+00000
+00000
+
+hole_u
+black
+.0.0.
+.....
+.....
+.....
+.....
+
+hole_d
+black darkbrown
+.....
+.....
+.....
+.....
+.1.1.
+
+hole_l
+black darkbrown
+.....
+0....
+.....
+0....
+.....
+
+hole_r
+black darkbrown
+.....
+....0
+.....
+....0
+.....
 
 dirt_pile *
-#ce861f brown #744402 lightbrown
+darkbrown #744402 brown #ce861f black
 ..00.
-.0000
-30020
-11211
-12222
-
-dirt_pile_initial
-lightbrown brown darkbrown
-.....
-.0110
-01101
-10111
-11111
+.020.
+01014
+42104
+44444
 
 wall_x #
 darkgray darkbrown
@@ -117,19 +345,51 @@ darkbrown darkgray
 
 water_source
 blue lightblue
-.000.
+00000
 10010
 01101
 00100
-.000.
+00000
 
 water_flow
 blue lightblue
-.010.
+00100
 00000
 00010
 01000
-.000.
+00000
+
+water_u
+lightblue
+.0.0.
+.....
+.....
+.....
+.....
+
+water_d
+lightblue
+.....
+.....
+.....
+.....
+.0.0.
+
+water_l
+lightblue
+.....
+0....
+.....
+0....
+.....
+
+water_r
+lightblue
+.....
+....0
+.....
+....0
+.....
 
 hidden_well w
 transparent
@@ -137,18 +397,28 @@ transparent
 water_shutoff
 transparent
 
+night
+black
+
 =======
 LEGEND
 =======
 
-background = dirt_ground or stone_ground or dirt_ground_filled
-diggable_ground = dirt_ground or dirt_ground_filled
-hole = dirt_hole or water_source or water_flow or stone_hole
+background = stone_ground
+diggable_ground = sand_ground or dirt_ground or mud_ground
+plantable_ground = dirt_ground or mud_ground
+hole = hole_x or hole_fd
 water = water_source or water_flow
 wall = wall_x or wall_d
-pushable = dirt_pile
+pushable = dirt_pile or wheat_seed or wheat_sheaf
 player = player_d or player_u or player_r or player_l
-on_ground = player or wall or dirt_pile
+on_ground = player or wall or pushable or wm_wall or tent or cow
+plant = wheat_sprout
+hole_deco = hole_u or hole_d or hole_l or hole_r
+water_deco = water_u or water_d or water_l or water_r
+sand_deco = sand_u or sand_d or sand_l or sand_r
+dirt_deco = dirt_u or dirt_d or dirt_l or dirt_r
+decoration = hole_deco or water_deco or sand_deco or dirt_deco
 
 =======
 SOUNDS
@@ -159,11 +429,42 @@ COLLISIONLAYERS
 ================
 
 background
-dirt_hole water stone_hole
-hidden_well hidden_stone
+sand_ground
+ sand_u
+ sand_d
+ sand_l
+ sand_r
+dirt_ground
+ dirt_u
+ dirt_d
+ dirt_l
+ dirt_r
+mud_ground
+ mud_u
+ mud_d
+ mud_l
+ mud_r
+grass_ground
+ grass_u
+ grass_d
+ grass_l
+ grass_r
+hole plant
+ hole_u
+ hole_d
+ hole_l
+ hole_r
+water
+ water_u
+ water_d
+ water_l
+ water_r
+hidden_well
 water_shutoff
-dirt_pile_initial
-player, wall, dirt_pile
+on_ground
+wm_door wm_out
+wheat_out
+night
 
 ======
 RULES
@@ -173,10 +474,14 @@ RULES
 DOWN [ wall | no wall ] -> [ wall_d | no wall ]
 
 (level start - wells)
-late [ hidden_well stone_ground ] -> [ hidden_well dirt_ground ]
+late [ hidden_well ] -> [ hidden_well dirt_ground ]
 
-(level start - hidden stone)
-late [ hidden_stone stone_ground ] -> [ hidden_stone dirt_ground ]
+[ tent ] -> [ tent grass_ground ]
+[ cow ] -> [ cow grass_ground ]
+
+(windmeeeeiil)
+[ wm_door ] -> [ wm_door wm_wall ]
+[ wm_out ] -> [ wm_out wm_wall ]
 
 (turn with moving)
 RIGHT [ > player ] -> [ > player_r ]
@@ -191,22 +496,12 @@ LEFT [ > player no player_l ] -> [ player_l ]
 UP [ > player no player_u ] -> [ player_u ]
 DOWN [ > player no player_d ] -> [ player_d ]
 )
-(
-(get off pile)
-[ > player dirt_pile_initial | no on_ground ] -> [ dirt_pile | player ]
-)
 
 (dig hole - dirt pile behind)
-RIGHT [ no on_ground | action player_r | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_r | dirt_hole diggable_ground ]
-LEFT [ no on_ground | action player_l | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_l | dirt_hole diggable_ground ]
-UP [ no on_ground |  action player_u | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_u | dirt_hole diggable_ground ]
-DOWN [ no on_ground | action player_d | diggable_ground no on_ground no hole no hidden_stone ] -> [ dirt_pile | player_d | dirt_hole diggable_ground ]
-
-(dig hole - hidden stone)
-RIGHT [ action player_r | diggable_ground no on_ground no hole hidden_stone ] -> [ player_r | stone_hole diggable_ground ]
-LEFT [ action player_l | diggable_ground no on_ground no hole hidden_stone ] -> [ player_l | stone_hole diggable_ground ]
-UP [ action player_u | diggable_ground no on_ground no hole hidden_stone ] -> [ player_u | stone_hole diggable_ground ]
-DOWN [ action player_d | diggable_ground no on_ground no hole hidden_stone ] -> [ player_d | stone_hole diggable_ground ]
+RIGHT [ no on_ground | action player_r | diggable_ground no on_ground no hole ] -> [ dirt_pile | player_r | hole_x diggable_ground ]
+LEFT [ no on_ground | action player_l | diggable_ground no on_ground no hole ] -> [ dirt_pile | player_l | hole_x diggable_ground ]
+UP [ no on_ground |  action player_u | diggable_ground no on_ground no hole ] -> [ dirt_pile | player_u | hole_x diggable_ground ]
+DOWN [ no on_ground | action player_d | diggable_ground no on_ground no hole ] -> [ dirt_pile | player_d | hole_x diggable_ground ]
 
 (
 (dig hole - end up in hole)
@@ -225,34 +520,118 @@ UP [ action player_u | diggable no on_ground ] -> [ player_u dirt_pile_initial |
 DOWN [ action player_d | diggable no on_ground ] -> [ player_d dirt_pile_initial | dirt_hole ]
 )
 
-(dig pile - onto ground behind)
-RIGHT [ no on_ground | action player_r | dirt_pile ] -> [ dirt_pile | player_r | ]
-LEFT [ no on_ground | action player_l | dirt_pile ] -> [ dirt_pile | player_l | ]
-UP [ no on_ground | action player_u | dirt_pile ] -> [ dirt_pile | player_u | ]
-DOWN [ no on_ground | action player_d | dirt_pile ] -> [ dirt_pile | player_d | ]
+("flip" pushable onto ground behind)
+RIGHT [ no on_ground | action player_r | pushable ] -> [ pushable | player_r | ]
+LEFT [ no on_ground | action player_l | pushable ] -> [ pushable | player_l | ]
+UP [ no on_ground | action player_u | pushable ] -> [ pushable | player_u | ]
+DOWN [ no on_ground | action player_d | pushable ] -> [ pushable | player_d | ]
 
-(dig pile - to fill hole)
-RIGHT [ dirt_hole | action player_r | dirt_pile ] -> [ dirt_ground_filled | player_r | ]
-LEFT [ dirt_hole | action player_l | dirt_pile ] -> [ dirt_ground_filled | player_l | ]
-UP [ dirt_hole | action player_u | dirt_pile ] -> [ dirt_ground_filled | player_u | ]
-DOWN [ dirt_hole | action player_d | dirt_pile ] -> [ dirt_ground_filled | player_d | ]
 
 (push)
 [ > player | pushable ] -> [ > player | > pushable ]
 
-(fill hole)
-late [ dirt_hole dirt_pile ] -> [ dirt_ground_filled ]
-late [ water dirt_pile ] -> [ dirt_ground_filled water_shutoff ]
+(
+(plant)
+right [ action player_r | wheat_seed plantable_ground no plant ] -> [ player_r | wheat_sprout plantable_ground ]
+left [ action player_l | wheat_seed plantable_ground no plant ] -> [ player_l | wheat_sprout plantable_ground ]
+up [ action player_u | wheat_seed plantable_ground no plant ] -> [ player_u | wheat_sprout plantable_ground ]
+down [ action player_d | wheat_seed plantable_ground no plant ] -> [ player_d | wheat_sprout plantable_ground ]
+)
 
-(propagate water shutoff)
-late [ water_shutoff | water ] -> [ water_shutoff | water_shutoff dirt_hole ]
+startloop
+(wheat -> seeds)
+[ > wheat_sheaf | wm_door ] -> [ | wheat_out wm_door ]
+[ wheat_out | wm_out ] -> [ wheat_out | wheat_out wm_out ]
+[ wheat_out no wm_out ] -> []
+
+(plant, fill holes, pushables push pushables)
+[ > dirt_pile | wheat_seed hole diggable_ground ] -> [ | diggable_ground wheat_sprout ]
++ [ > pushable | pushable ] -> [ > pushable | > pushable ]
++ down [ wm_out wheat_out | pushable ] -> [ wm_out wheat_out | > pushable ]
+
+endloop
+
+late down [ wm_out wheat_out | no on_ground ] -> [ wm_out | wheat_seed ]
+
+(sleep)
+right [ action player_r | tent ] -> [ player_r | tent night ]
+left [ action player_l | tent ] -> [ player_l | tent night ]
+up [ action player_u | tent ] -> [ player_u | tent night ]
+down [ action player_d | tent ] -> [ player_d | tent night ]
+
+( night timmmeu )
+[ night | no night ] -> [ night | night ] message zzzzz...zzzzzz....
+(mud -> dirt, dirt -> sand)
+[ night dirt_ground no plant ] -> [ night sand_ground ]
+[ night mud_ground no plant ] -> [ night dirt_ground ]
+( grow plants )
+[ night wheat_sprout plantable_ground ] -> [ night wheat_sheaf plantable_ground ]
+[ night wheat_sprout no plantable_ground ] -> [ night ]
+
+[ night ] -> []
+
+(fill holes)
+late [ hole dirt_pile ] -> [ sand_ground ]
+
+(water shutoff)
+late [ water no hole ] -> [ water_shutoff ]
+late [ water_shutoff | water ] -> [ water_shutoff | water_shutoff ]
+late [ water_shutoff | mud_ground ] -> [ water_shutoff | dirt_ground ]
 late [ water_shutoff no water ] -> []
 
-(water fills hole)
-late [ hidden_well dirt_hole ] -> [ hidden_well water_source ]
+(water sources)
+late [ hidden_well hole ] -> [ hidden_well water_source hole ]
+late [ hidden_well no hole sand_ground ] -> [ hidden_well dirt_ground ]
 
 (water fills adjacent holes)
-late [ water | dirt_hole ] -> [ water | water_flow ]
+late [ water hole | no water hole ] -> [ water hole | water_flow hole ]
+
+(water creates mud around it)
+late [ water | diggable_ground ] -> [ water | mud_ground ]
+
+(decoration)
+late up [ hole_x | no hole ] -> [ hole_fd | ]
+late up [ hole_fd | hole ] -> [ hole_x | hole ]
+
+late up [ hole | no hole ] -> [ hole | hole_d ]
+late down [ hole | no hole ] -> [ hole | hole_u ]
+late left [ hole | no hole ] -> [ hole | hole_r ]
+late right [ hole | no hole ] -> [ hole | hole_l ]
+late [ hole_deco hole ] -> [ hole ]
+late up [ hole_u | no hole ] -> [|]
+late down [ hole_d | no hole ] -> [|]
+late left [ hole_l | no hole ] -> [|]
+late right [ hole_r | no hole ] -> [|]
+
+late up [ water | no water ] -> [ water | water_d ]
+late down [ water | no water ] -> [ water | water_u ]
+late left [ water | no water ] -> [ water | water_r ]
+late right [ water | no water ] -> [ water | water_l ]
+late [ water_deco water ] -> [ water ]
+late up [ water_u | no water ] -> [|]
+late down [ water_d | no water ] -> [|]
+late left [ water_l | no water ] -> [|]
+late right [ water_r | no water ] -> [|]
+
+late up [ sand_ground | no sand_ground ] -> [ sand_ground | sand_d ]
+late down [ sand_ground | no sand_ground ] -> [ sand_ground | sand_u ]
+late left [ sand_ground | no sand_ground ] -> [ sand_ground | sand_r ]
+late right [ sand_ground | no sand_ground ] -> [ sand_ground | sand_l ]
+late [ sand_deco sand_ground ] -> [ sand_ground ]
+late up [ sand_u | no sand_ground ] -> [|]
+late down [ sand_d | no sand_ground ] -> [|]
+late left [ sand_l | no sand_ground ] -> [|]
+late right [ sand_r | no sand_ground ] -> [|]
+
+late up [ dirt_ground | no dirt_ground ] -> [ dirt_ground | dirt_d ]
+late down [ dirt_ground | no dirt_ground ] -> [ dirt_ground | dirt_u ]
+late left [ dirt_ground | no dirt_ground ] -> [ dirt_ground | dirt_r ]
+late right [ dirt_ground | no dirt_ground ] -> [ dirt_ground | dirt_l ]
+late [ dirt_deco dirt_ground ] -> [ dirt_ground ]
+late up [ dirt_u | no dirt_ground ] -> [|]
+late down [ dirt_d | no dirt_ground ] -> [|]
+late left [ dirt_l | no dirt_ground ] -> [|]
+late right [ dirt_r | no dirt_ground ] -> [|]
 
 ==============
 WINCONDITIONS
@@ -263,16 +642,16 @@ WINCONDITIONS
 LEVELS
 =======
 
-#################
-#################
-#####======##=###
-#=======..=====##
-#====#=====..=#=#
-#====...====..==#
-#==#=.....==..#=#
-#=##...p......#=#
+#######[#########
+######[[[########
+######[[[""##=###
+#"""""kdk"""===##
+#""b"""""""..=#=#
+#"c"""...====..==#
+#""#".....==..#=#
+#"##...p...j..#=#
 #==.w.........#=#
-##=+++........==#
+##=...w..j....==#
 #===..........==#
 ##==........##=##
 ##===..=....##=##
