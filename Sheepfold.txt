@@ -136,7 +136,7 @@ black
 dark_x
 black
 
-player p
+player
 black brown #eee blue
 .000.
 .010.
@@ -147,8 +147,8 @@ black brown #eee blue
 slash_x
 white
 
-sheep_r &
-#ddd #aaa #fed060
+sheep_r
+#ddd #aaa #fed060 #deb040
 ...00
 00012
 0000.
@@ -156,28 +156,72 @@ sheep_r &
 2..2.
 
 sheep_l
-#ddd #aaa #fed060
-...00
-00012
-0000.
-2112.
-2..2.
+#ddd #aaa #fed060 #deb040
+00...
+21000
+.0000
+.2112
+.2..2
 
 sheep_d
-#ddd #aaa #fed060
-...00
-00012
-0000.
-2112.
-2..2.
+#ddd #aaa #fed060 #deb040
+.000.
+00200
+10301
+.111.
+.2.2.
 
 sheep_u
 #ddd #aaa #fed060
+.000.
+00000
+01010
+.111.
+.2.2.
+
+sheep_f_r
+#ddd #aaa #fed060 #deb040 blue
 ...00
-00012
-0000.
+00412
+0004.
 2112.
 2..2.
+
+sheep_f_l
+#ddd #aaa #fed060 #deb040 blue
+00...
+21400
+.4000
+.2112
+.2..2
+
+sheep_f_d
+#ddd #aaa #fed060 #deb040 blue
+.000.
+04240
+14341
+.111.
+.2.2.
+
+sheep_f_u
+#ddd #aaa #fed060 #deb040 blue
+.404.
+00000
+01010
+.111.
+.2.2.
+
+sheep_f_np_0
+transparent
+
+sheep_f_np_1
+transparent
+
+sheep_f_np_2
+transparent
+
+sheep_f_np
+transparent
 
 sheep_in_fold
 #ddd #aaa #fed060
@@ -356,21 +400,82 @@ orange white brown
 .002.
 ..2..
 
+call_r
+lightblue
+..0..
+...0.
+....0
+...0.
+..0..
+
+call_l
+lightblue
+..0..
+.0...
+0....
+.0...
+..0..
+
+call_u
+lightblue
+..0..
+.0.0.
+0...0
+.....
+.....
+
+call_d
+lightblue
+.....
+.....
+0...0
+.0.0.
+..0..
+
+call_particle_0
+lightblue
+.....
+.....
+.....
+0...0
+.000.
+
+call_particle_1
+lightblue
+.....
+.....
+00.00
+..0..
+.....
+
+call_particle_2
+lightblue
+0...0
+..0..
+.....
+.....
+.....
+
 =======
 LEGEND
 =======
 
 background = grass
-wall = stone_wall or cave_wall or cave_wall_f or tree_wall or tree_wall_f or gate or rock_wall or rock_wall_f or rock_ledge or cave_ledge
+wall = stone_wall or cave_wall or cave_wall_f or tree_wall or tree_wall_f or gate or rock_wall or rock_wall_f
+ledge = cave_ledge or rock_ledge
 ground_item = gloves_item or axe_item or diamond or candle_item
 held_item = gloves or axe or candle_unlit or candle_lit
-sheep = sheep_r or sheep_l or sheep_d or sheep_u
+sheep_wander = sheep_r or sheep_l or sheep_d or sheep_u
+sheep_follow = sheep_f_r or sheep_f_l or sheep_f_d or sheep_f_u
+sheep = sheep_wander or sheep_follow
+sheep_f_np_any = sheep_f_np_0 or sheep_f_np_1 or sheep_f_np_2 or sheep_f_np
+creature = sheep or player
 pushable = rock
 obstacle = player or wall or rock or tree or sheep or pushable or sheep_in_fold
+call_blocker = wall or rock or tree
 light = candle_item or candle_lit
 ] = cave_floor and cave_wall
 dark = dark_0 or dark_1 or dark_2 or dark_3 or dark_4 or dark_x
-ledge = rock_ledge or cave_ledge
 tree_stump = tree_stump_0 or tree_stump_1 or tree_stump_2 or tree_stump_3 or tree_stump_4 or tree_stump_5
 g = gloves_item
 a = axe_item
@@ -379,6 +484,10 @@ c = cave_floor and candle_item
 1 = sheep_r and dirt
 2 = rock and dirt
 3 = cave_ledge and cave_floor
+call = call_r or call_l or call_u or call_d
+particle = call_particle_0 or call_particle_1 or call_particle_2
+& = sheep_r
+p = player
 
 =======
 SOUNDS
@@ -424,9 +533,12 @@ COLLISIONLAYERS
 
 background
 cave_floor, dirt, grass_fold, dirt_grass
-tree_stump
+tree_stump, ledge
 ground_item
 obstacle
+sheep_f_np_any
+call
+particle
 slash_x
 gloves
 axe
@@ -471,32 +583,91 @@ down [ rock_wall | no wall ] -> [ rock_wall_f | ]
 [ > player axe | tree ] -> [ player axe | tree slash_x ] sfx1 again
 ([ > player axe | sheep ] -> [ player axe | sheep slash_x ] sfx2 again)
 
+(
+(candle action)
 [ action player candle_lit ] -> [ player candle_unlit ] sfx4
 [ action player candle_unlit ] -> [ player candle_lit ] sfx3
+)
 
-(sheep)
+(sheep start follow (before release so it works))
+right [ player | sheep no sheep_follow ] -> [ player | sheep_f_l ]
+left [ player | sheep no sheep_follow ] -> [ player | sheep_f_r ]
+up [ player | sheep no sheep_follow ] -> [ player | sheep_f_d ]
+down [ player | sheep no sheep_follow ] -> [ player | sheep_f_u ]
+
+(call / release sheep action)
+
+[ call_particle_2 ] -> [ ]
+[ call_particle_1 ] -> [ call_particle_2 ]
+[ call_particle_0 ] -> [ call_particle_1 ]
+
+[ call ] -> []
+
+up [ action player | no obstacle ] -> [ action player | call_d ]
+down [ action player | no obstacle ] -> [ action player | call_u ]
+right [ action player | no obstacle ] -> [ action player | call_l ]
+left [ action player | no obstacle ] -> [ action player | call_r ]
+
+up [ call_d no sheep | no call_d no call_blocker ] -> [ | call_d ]
+down [ call_u no sheep | no call_u no call_blocker ] -> [ | call_u ]
+right [ call_l no sheep | no call_l no call_blocker ] -> [ | call_l ]
+left [ call_r no sheep | no call_r no call_blocker ] -> [ | call_r ]
+
+up [ call_u sheep ] -> [ call_particle_0 sheep_u ]
+down [ call_d sheep ] -> [ call_particle_0 sheep_d ]
+right [ call_r sheep ] -> [ call_particle_0 sheep_r ]
+left [ call_l sheep ] -> [ call_particle_0 sheep_l ]
+
+(if sheep walks onto call)
+late [ call sheep ] -> [ sheep ]
+
+right [ action player | sheep_follow ] -> [ action player | sheep_r ]
+left [ action player | sheep_follow ] -> [ action player | sheep_l ]
+up [ action player | sheep_follow ] -> [ action player | sheep_u ]
+down [ action player | sheep_follow ] -> [ action player | sheep_d ]
+
+(sheep in fold)
 up [ sheep grass_fold | stone_wall ] -> [ sheep_in_fold grass_fold | stone_wall ] checkpoint
 up [ sheep grass_fold | sheep_in_fold ] -> [ sheep_in_fold grass_fold | sheep_in_fold ] checkpoint
 
+(sheep wander)
 [ stationary sheep_r no slash_x ] -> [ right sheep_r ]
 [ stationary sheep_l no slash_x ] -> [ left sheep_l ]
 [ stationary sheep_u no slash_x ] -> [ up sheep_u ]
 [ stationary sheep_d no slash_x ] -> [ down sheep_d ]
-right [ > sheep no slash_x | obstacle ] -> [ down sheep_d | obstacle ]
-left [ > sheep no slash_x | obstacle ] -> [ up sheep_u | obstacle ]
-up [ > sheep no slash_x | obstacle ] -> [ right sheep_r | obstacle ]
-down [ > sheep no slash_x | obstacle no ledge ] -> [ left sheep_l | obstacle ]
+right [ > sheep_wander no slash_x | obstacle ] -> [ down sheep_d | obstacle ]
+left [ > sheep_wander no slash_x | obstacle ] -> [ up sheep_u | obstacle ]
+up [ > sheep_wander no slash_x | obstacle ] -> [ right sheep_r | obstacle ]
+up [ > sheep_wander no slash_x | ledge ] -> [ right sheep_r | ledge ]
+down [ > sheep_wander no slash_x | obstacle no ledge ] -> [ left sheep_l | obstacle ]
+
+(sheep follow)
+[ sheep_follow | player ] -> [ > sheep_follow | player ]
+
+right [ > sheep_follow no slash_x ] -> [ > sheep_f_r ]
+left [ > sheep_follow no slash_x ] -> [ > sheep_f_l ]
+up [ > sheep_follow no slash_x ] -> [ > sheep_f_u ]
+down [ > sheep_follow no slash_x ] -> [ > sheep_f_d ]
+
+late right [ sheep_follow | no player ] -> [ sheep_follow sheep_f_np_0 | ]
+late left [ sheep_follow sheep_f_np_0 | no player ] -> [ sheep_follow sheep_f_np_1 | ]
+late up [ sheep_follow sheep_f_np_1 | no player ] -> [ sheep_follow sheep_f_np_2 | ]
+late down [ sheep_follow sheep_f_np_2 | no player ] -> [ sheep_follow sheep_f_np | ]
+late [ sheep_f_r sheep_f_np ] -> [ sheep_r ]
+late [ sheep_f_l sheep_f_np ] -> [ sheep_l ]
+late [ sheep_f_u sheep_f_np ] -> [ sheep_u ]
+late [ sheep_f_d sheep_f_np ] -> [ sheep_d ]
+late [ sheep_f_np_any ] -> []
 
 (ledge)
-down [ > player | ledge | no obstacle ] -> [ | ledge | player ]
-down [ > sheep | ledge | no obstacle ] -> [ | ledge | sheep ]
+down [ creature ledge | no obstacle ] -> [ > creature ledge | ]
 
 (item pickup)
 late [ player gloves_item ] -> [ player gloves ] sfx0
 late [ player axe_item ] -> [ player axe ] sfx5
 late [ player candle_item ] -> [ player candle_lit ] sfx3
 
-(hold onto held items)
+(ensure held items stay held)
 late [ player | ... | held_item ] -> [ player held_item | ... | ]
 
 (let there be...candles!)
@@ -510,11 +681,28 @@ late [ dark_3 | dark_x ] -> [ dark_3 | dark_4 ]
 WINCONDITIONS
 ==============
 
-all grass_fold on sheep_in_fold
+(all grass_fold on sheep_in_fold)
 
 =======
 LEVELS
 =======
+
+..;;;;||||||||||
+.;;;;;.&...''''|
+;;;;;.....'''''|
+;;;;;;...''''''|
+;;;;;;..'''''''|
+;;........'''|||
+;.......||v|||||
+;......*'''''''|
+;..*p.g.'''''''|
+;;.......''''''|
+;........'|'''||
+;;.....$..||||||
+;;;.......||||||
+;;;;;.;..;||||||
+;;;;;;;;;;||||||
+;;;;;;;;;;||||||
 
 ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]||||||||||||||||||||||||||||||||
 ]]]]]]]]]]]]]]]]],,,],]],,,,,,]]|||||||||||||||||'''''|'''||||||
