@@ -609,9 +609,17 @@ darkbrown #242 #122
 2....
 .....
 
-tree_wall ;
+tree_wall
 darkbrown #242 #122
-11112
+21112
+12121
+22212
+22122
+.2222
+
+tree_wall_f
+darkbrown #242 #122
+21112
 12121
 20212
 20120
@@ -690,7 +698,8 @@ LEGEND
 
 background = grass
 rock_wall_any = rock_wall or rock_wall_f
-wall = stone_wall or cave_wall or cave_wall_f or tree_wall or gate or rock_wall_any
+tree_wall_any = tree_wall or tree_wall_f
+wall = stone_wall or cave_wall or cave_wall_f or tree_wall_any or gate or rock_wall_any
 ledge = cave_ledge or rock_ledge
 ground_item = gloves_item or axe_item or diamond or candle_item or hair_item
 hair = hair_held or hair_l or hair_r or hair_u
@@ -741,6 +750,7 @@ v = rock_ledge
 * = rock
 t = tree
 $ = diamond
+; = tree_wall
 
 =======
 SOUNDS
@@ -816,7 +826,10 @@ tree_wall_r
 tree_u
 
 dark
-call
+call_d
+call_u
+call_r
+call_l
 
 anim_done
 
@@ -836,12 +849,13 @@ down [ cave_wall | no wall ] -> [ cave_wall_f | ]
 
 down [ rock_wall | no rock_wall_any ] -> [ rock_wall_f | ]
 up [ rock_wall_any | no rock_wall ] -> [ rock_wall_any | rock_wall_u ]
-right [ no rock_wall_any no ledge | rock_wall_any ] -> [ rock_wall_l | rock_wall_any ]
-right [ rock_wall_any | no rock_wall_any no ledge ] -> [ rock_wall_any | rock_wall_r ]
+right [ no rock_wall_any no ledge no tree_wall_any | rock_wall_any ] -> [ rock_wall_l | rock_wall_any ]
+right [ rock_wall_any | no rock_wall_any no ledge no tree_wall_any ] -> [ rock_wall_any | rock_wall_r ]
 
-up [ tree_wall | ] -> [ tree_wall | tree_wall_u ]
-right [ no tree_wall | tree_wall ] -> [ tree_wall_l | tree_wall ]
-right [ tree_wall | no tree_wall ] -> [ tree_wall | tree_wall_r ]
+down [ tree_wall_any | no tree_wall_any ] -> [ tree_wall_f | ]
+up [ tree_wall_any | ] -> [ tree_wall_any | tree_wall_u ]
+right [ no tree_wall_any | tree_wall_any ] -> [ tree_wall_l | tree_wall_any ]
+right [ tree_wall_any | no tree_wall_any ] -> [ tree_wall_any| tree_wall_r ]
 
 right [ water | no water ] -> [ water | water_edge_r ]
 left [ water | no water ] -> [ water | water_edge_l ]
@@ -904,27 +918,29 @@ down [ player | sheep no sheep_follow ] -> [ player | sheep_f_u ]
 [ call_particle_0 ] -> [ call_particle_1 ]
 
 [ call ] -> []
-
+(
 up [ action player | no obstacle ] -> [ action player | call_d ]
 down [ action player | no obstacle ] -> [ action player | call_u ]
 right [ action player | no obstacle ] -> [ action player | call_l ]
 left [ action player | no obstacle ] -> [ action player | call_r ]
+)
+[ action player no call ] -> [ action player call_d call_u call_r call_l ]
 
 up [ call_d no sheep | no call_d no call_blocker ] -> [ call_d | call_d ]
 down [ call_u no sheep | no call_u no call_blocker ] -> [ call_u | call_u ]
 right [ call_l no sheep | no call_l no call_blocker ] -> [ call_l | call_l ]
 left [ call_r no sheep | no call_r no call_blocker ] -> [ call_r | call_r ]
 
-up [ call_u sheep ] -> [ call_particle_0 sheep_u ]
-down [ call_d sheep ] -> [ call_particle_0 sheep_d ]
-right [ call_r sheep ] -> [ call_particle_0 sheep_r ]
-left [ call_l sheep ] -> [ call_particle_0 sheep_l ]
+up [ call_u sheep no sheep_follow no sheep_u ] -> [ call_particle_0 sheep_u ]
+down [ call_d sheep no sheep_follow no sheep_d ] -> [ call_particle_0 sheep_d ]
+right [ call_r sheep no sheep_follow no sheep_r ] -> [ call_particle_0 sheep_r ]
+left [ call_l sheep no sheep_follow no sheep_l ] -> [ call_particle_0 sheep_l ]
 
 (do it again late - sheep walks onto call)
-late up [ call_u sheep ] -> [ call_particle_0 sheep_u ]
-late down [ call_d sheep ] -> [ call_particle_0 sheep_d ]
-late right [ call_r sheep ] -> [ call_particle_0 sheep_r ]
-late left [ call_l sheep ] -> [ call_particle_0 sheep_l ]
+late up [ call_u sheep no sheep_follow no sheep_u ] -> [ call_particle_0 sheep_u ]
+late down [ call_d sheep no sheep_follow no sheep_d ] -> [ call_particle_0 sheep_d ]
+late right [ call_r sheep no sheep_follow no sheep_r ] -> [ call_particle_0 sheep_r ]
+late left [ call_l sheep no sheep_follow no sheep_l ] -> [ call_particle_0 sheep_l ]
 
 (if sheep walks onto call)
 (late [ call sheep ] -> [ sheep ])
