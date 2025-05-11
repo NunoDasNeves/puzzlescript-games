@@ -377,21 +377,85 @@ hair_u
 .102.
 10100
 
-stone_wall 
-darkgray darkbrown gray
-22212
-10110
-01001
-10010
-00010
+stone_wall_x
+darkgray #444 gray
+.021.
+.111.
+.000.
+.101.
+.111.
 
-gate
+stone_wall_r
+darkgray #444 gray
+..202
+...01
+...10
+...01
+...11
+
+stone_wall_l
+darkgray #444 gray
+212..
+01...
+10...
+01...
+11...
+
+stone_wall_u
+darkgray #444 gray
+..2..
+.....
+.....
+.....
+.....
+
+stone_wall_d
+darkgray #444 gray
+..2..
+.001.
+.020.
+.011.
+.020.
+
+gate_open
 brown darkbrown
-00000
-01..0
-0.1.0
-0..10
-11111
+00...
+1.000
+1.1.1
+111.1
+..111
+
+gate_closed_top
+brown darkbrown
+.....
+.....
+1....
+01...
+01...
+
+gate_closed_mid
+brown darkbrown
+01...
+01...
+01...
+01...
+11...
+
+gate_post_top
+brown darkbrown
+.....
+0....
+1....
+1....
+1....
+
+gate_post_bot
+brown darkbrown
+01...
+11...
+1....
+1....
+.....
 
 rock
 gray darkgray
@@ -692,6 +756,9 @@ lightblue
 anim_done
 transparent
 
+gate_change
+transparent
+
 =======
 LEGEND
 =======
@@ -699,14 +766,18 @@ LEGEND
 background = grass
 rock_wall_any = rock_wall or rock_wall_f
 tree_wall_any = tree_wall or tree_wall_f
-wall = stone_wall or cave_wall or cave_wall_f or tree_wall_any or gate or rock_wall_any
+stone_wall_dir = stone_wall_r or stone_wall_l or stone_wall_u or stone_wall_d
+stone_wall_any = stone_wall_x or stone_wall_dir
+gate_post = gate_post_bot or gate_post_top
+gate = gate_open or gate_closed_mid
+wall = stone_wall_x or cave_wall or cave_wall_f or tree_wall_any or gate or rock_wall_any
 ledge = cave_ledge or rock_ledge
 ground_item = gloves_item or axe_item or diamond or candle_item or hair_item
 hair = hair_held or hair_l or hair_r or hair_u
 held_item = gloves or axe or candle_unlit or candle_lit or hair_held
 sheep_wander = sheep_r or sheep_l or sheep_d or sheep_u
 sheep_follow = sheep_f_r or sheep_f_l or sheep_f_d or sheep_f_u
-sheep = sheep_wander or sheep_follow
+sheep = sheep_wander or sheep_follow or sheep_in_fold
 sheep_f_np_any = sheep_f_np_0 or sheep_f_np_1 or sheep_f_np_2 or sheep_f_np
 creature = sheep or player
 pushable = rock
@@ -745,8 +816,8 @@ water_cover = water_cover_deep or water_cover_shallow
 , = cave_floor
 ' = dirt
 v = rock_ledge
-# = stone_wall
-\ = gate
+# = stone_wall_x
+\ = gate_open and gate_post_bot
 * = rock
 t = tree
 $ = diamond
@@ -805,6 +876,8 @@ water_edge_l
 water_edge_u
 water_edge_d
 water_shallows
+gate_post
+gate_closed_top
 ground_item
 obstacle
 sheep_f_np_any
@@ -817,6 +890,10 @@ candle_lit
 water_cover
 particle
 
+stone_wall_r
+stone_wall_l
+stone_wall_u
+stone_wall_d
 rock_wall_u
 rock_wall_l
 rock_wall_r
@@ -832,6 +909,7 @@ call_r
 call_l
 
 anim_done
+gate_change
 
 ======
 RULES
@@ -861,6 +939,13 @@ right [ water | no water ] -> [ water | water_edge_r ]
 left [ water | no water ] -> [ water | water_edge_l ]
 up [ water | no water ] -> [ water | water_edge_u ]
 down [ water | no water ] -> [ water | water_edge_d ]
+
+right [ stone_wall_x | stone_wall_x ] -> [ stone_wall_x stone_wall_r | stone_wall_x stone_wall_l]
+down [ stone_wall_x | stone_wall_x ] -> [ stone_wall_x stone_wall_d | stone_wall_x stone_wall_u]
+right [ stone_wall_l no stone_wall_u no stone_wall_d | no stone_wall_any ] -> [ stone_wall_l stone_wall_r | ]
+left [ stone_wall_r no stone_wall_u no stone_wall_d | no stone_wall_any ] -> [ stone_wall_l stone_wall_r | ]
+
+up [ gate_post_bot | | no gate_post_top ] -> [ gate_post_bot | | gate_post_top ]
 
 (water anim)
 [ water_d_1 no anim_done ] -> [ water_d_0 anim_done ]
@@ -951,22 +1036,22 @@ up [ action player | sheep_follow ] -> [ action player | sheep_u ]
 down [ action player | sheep_follow ] -> [ action player | sheep_d ]
 
 (candle action - after call because they both go)
-[ > player no cave_floor | cave_floor ] -> [ > player candle_lit | cave_floor ]
+[ > player candle_unlit  no cave_floor | cave_floor ] -> [ > player candle_lit | cave_floor ]
 [ > player candle_lit cave_floor | no cave_floor ] -> [ > player candle_unlit cave_floor | ]
 [ action player cave_floor candle_lit ] -> [ player cave_floor candle_unlit ] sfx4
 [ action player cave_floor candle_unlit ] -> [ player cave_floor candle_lit ] sfx3
-
-(sheep in fold)
-up [ sheep grass_fold | stone_wall ] -> [ sheep_in_fold grass_fold | stone_wall ] checkpoint
-up [ sheep grass_fold | sheep_in_fold ] -> [ sheep_in_fold grass_fold | sheep_in_fold ] checkpoint
 
 (sheep wander)
 [ stationary sheep_r no slash_x ] -> [ right sheep_r ]
 [ stationary sheep_l no slash_x ] -> [ left sheep_l ]
 [ stationary sheep_u no slash_x ] -> [ up sheep_u ]
 [ stationary sheep_d no slash_x ] -> [ down sheep_d ]
+(sheep change direction)
 right [ > sheep_wander no slash_x | obstacle ] -> [ down sheep_d | obstacle ]
 left [ > sheep_wander no slash_x | obstacle ] -> [ up sheep_u | obstacle ]
+(sheep in fold)
+up [ > sheep grass_fold | stone_wall_x ] -> [ sheep_in_fold grass_fold | stone_wall_x ] checkpoint
+up [ > sheep grass_fold | sheep_in_fold ] -> [ sheep_in_fold grass_fold | sheep_in_fold ] checkpoint
 up [ > sheep_wander no slash_x | obstacle ] -> [ right sheep_r | obstacle ]
 up [ > sheep_wander no slash_x | ledge ] -> [ right sheep_r | ledge ]
 down [ > sheep_wander no slash_x | obstacle no ledge ] -> [ left sheep_l | obstacle ]
@@ -991,6 +1076,14 @@ late [ sheep_f_np_any ] -> []
 
 (ledge)
 down [ creature ledge | no obstacle ] -> [ > creature ledge | ]
+
+(gate)
+[ > player | gate_open ] -> [ player | gate_open gate_change ]
+[ > player | gate_closed_mid ] -> [ player | gate_closed_mid gate_change ]
+
+late up [ gate_open gate_change | no obstacle | ] -> [ | gate_closed_mid | gate_closed_top ]
+late down [ gate_closed_top | gate_closed_mid gate_change | no obstacle ] -> [ | | gate_open ]
+late [ gate_change ] -> []
 
 (cancel sheep_follow on stationary player (for water))
 [ > sheep_follow | stationary player ] -> [ sheep_follow | player ]
@@ -1031,7 +1124,8 @@ late [ dark_3 | dark_x ] -> [ dark_3 | dark_4 ]
 WINCONDITIONS
 ==============
 
-(all grass_fold on sheep_in_fold)
+all grass_fold on sheep_in_fold
+some gate_closed_mid
 
 =======
 LEVELS
@@ -1042,13 +1136,13 @@ LEVELS
 ;;;;;.....'''''|
 ;;;;;;...''''''|
 ;;;;;;..'''''''|
-;;........'''|||
-;.......||v|||||
-;......*''''1''|
-;...p.g.'''''''|
-;;.....*.''''''|
-;........'|'''||
-;;.....$..||||||
+;;...|||..'''|||
+;......|||v|||||
+;.......''''1''|
+;...p...'''''''|
+;;.###...''''''|
+;..#--...'|'''||
+;;.###\...||||||
 ;;;.......||||||
 ;;;;;.;..;||||||
 ;;;;;;;;;;||||||
