@@ -20,31 +20,48 @@ debug
 OBJECTS
 ========
 
-grass .
-#60b020 #509020
+grass
+#60b020 #509820
 11111
 00111
 11100
 11111
 11001
 
-dirt_grass
-#664411 #765411 #60b020 #509020
-00333
-20110
-11330
-00022
-33011
+dirt_edge
+#765422 #886630 #872 #509820
+02232
+30110
+12330
+20023
+32011
 
-grass_fold -
-#60b020 #509020
+tree_ground
+#582 #472
+11110
+00111
+11100
+11111
+11001
+
+
+tree_edge
+#582 #472
+0.01.
+1...0
+..11.
+110.1
+0..00
+
+grass_fold
+#60b020 #509820
 01111
 00110
 11100
 10111
 11001
 
-cave_floor ,
+cave_floor
 #373025 #453721
 00000
 00110
@@ -63,15 +80,39 @@ cave_wall_f
 01010
 00010
 
-dirt '
-#664411 #765411
+dirt
+#765422 #886630
 00000
 00110
 11000
 00000
 00011
 
-rock_wall |
+rock_wall_u
+#352721 darkbrown
+.....
+.....
+.....
+.000.
+00000
+
+rock_wall_l
+#352721 darkbrown
+.....
+....0
+....0
+....0
+.....
+
+rock_wall_r
+#352721 darkbrown
+.....
+0....
+0....
+0....
+.....
+
+rock_wall
 #352721 darkbrown
 00100
 10000
@@ -82,12 +123,12 @@ rock_wall |
 rock_wall_f
 darkbrown #352721
 11111
-00101
-00110
+01101
 01010
-00001
+01010
+101.1
 
-rock_ledge v
+rock_ledge
 darkbrown #765411 brown #664411 #352721
 23332
 02221
@@ -137,7 +178,7 @@ dark_x
 black
 
 player
-black brown #eee blue
+black brown #eee #35f
 .000.
 .010.
 13331
@@ -180,7 +221,7 @@ sheep_u
 .2.2.
 
 sheep_f_r
-#ddd #aaa #fed060 #deb040 blue
+#ddd #aaa #fed060 #deb040 #19f
 ...00
 00412
 0004.
@@ -188,7 +229,7 @@ sheep_f_r
 2..2.
 
 sheep_f_l
-#ddd #aaa #fed060 #deb040 blue
+#ddd #aaa #fed060 #deb040 #19f
 00...
 21400
 .4000
@@ -196,15 +237,15 @@ sheep_f_l
 .2..2
 
 sheep_f_d
-#ddd #aaa #fed060 #deb040 blue
+#ddd #aaa #fed060 #deb040 #19f
 .000.
 04240
-14341
+11411
 .111.
 .2.2.
 
 sheep_f_u
-#ddd #aaa #fed060 #deb040 blue
+#ddd #aaa #fed060 #deb040 #19f
 .404.
 00000
 01010
@@ -241,28 +282,28 @@ dead_sheep
 )
 
 gloves
-darkgreen #aa2299
+darkgreen #aa2299 #223333 #ffbb00
 .....
 .....
-1...1
-0...0
+.....
+.232.
 .....
 
 gloves_item
-darkgreen #aa2299
-...00
-..000
-00.11
-000..
-11...
+darkgreen #aa2299 #223333 brown #ffbb00
+.....
+.222.
+2...2
+00400
+.....
 
 axe
-black orange
+orange
 .....
+....0
+....0
 .....
-.....
-0111.
-00...
+....0
 
 axe_item
 orange black
@@ -284,19 +325,59 @@ candle_unlit
 #ff6600 #eed0a0 white yellow
 .....
 .....
-...1.
-...1.
+.....
+....1
 .....
 
 candle_lit
-#ff6600 #eed0a0 white yellow
+#ff6600 gray white yellow
 .....
-...0.
-..323
-...1.
+....0
+....3
+....1
 .....
 
-stone_wall #
+hair_item
+orange #ffbb00 #253 black
+.3...
+.332.
+..0..
+.110.
+.000.
+
+hair_held
+#132 #253 darkbrown #27f
+01001
+10.00
+.....
+.....
+.....
+
+hair_l
+#132 #253 darkbrown
+....2
+.....
+.....
+.....
+.....
+
+hair_r
+black
+.....
+.....
+.....
+.....
+.....
+
+hair_u
+#132 #253 darkbrown
+.....
+.....
+....2
+.102.
+10100
+
+stone_wall 
 darkgray darkbrown gray
 22212
 10110
@@ -304,7 +385,7 @@ darkgray darkbrown gray
 10010
 00010
 
-gate \
+gate
 brown darkbrown
 00000
 01..0
@@ -312,7 +393,7 @@ brown darkbrown
 0..10
 11111
 
-rock *
+rock
 gray darkgray
 .000.
 00000
@@ -320,13 +401,141 @@ gray darkgray
 10001
 11111
 
-tree t
-brown #408030 #306020
-.111.
-21221
-20121
-.020.
-..0..
+tree_u
+darkbrown #253 #132
+.....
+.....
+.11..
+1111.
+.1122
+
+tree
+darkbrown #253 #132
+1120.
+02121
+10.02
+..001
+.00..
+
+water_cover_deep
+#6bf #9ef #dff
+.....
+.....
+.....
+21222
+00101
+
+water_cover_shallow
+#6bf #9ef #dff
+.....
+.....
+.....
+.....
+21212
+
+water_shallows
+#6bf #9ef  #a9b #eff
+3...2
+22..3
+...22
+.33..
+.22..
+
+water_d_0
+#6bf #9ef #dff
+01110
+00000
+10001
+01110
+10001
+
+water_d_1
+#6bf #9ef #dff
+10001
+01110
+00000
+10001
+01110
+
+water_u_0
+#6bf #9ef #dff
+00000
+01110
+10001
+01110
+10001
+
+water_u_1
+#6bf #9ef #dff
+01110
+10001
+01110
+10001
+00000
+
+water_r_0
+#6bf #9ef #dff
+10010
+01001
+01001
+01001
+10010
+
+water_r_1
+#6bf #9ef #dff
+01001
+10100
+10100
+10100
+01001
+
+water_l_0
+#6bf #9ef #dff
+10100
+01001
+01001
+01001
+10100
+
+water_l_1
+#6bf #9ef #dff
+01001
+10010
+10010
+10010
+01001
+
+water_edge_r
+#6bf #8df #6bf #323
+3....
+23...
+23...
+.....
+.....
+
+water_edge_l
+#6bf #8df #6bf #323
+.....
+....3
+...32
+...32
+.....
+
+water_edge_u
+#6bf #8df #6bf #323
+.....
+.....
+.....
+..33.
+33223
+
+water_edge_d
+#6bf #8df #6bf #323
+.22..
+.....
+.....
+.....
+.....
 
 tree_stump_0
 brown
@@ -376,23 +585,39 @@ brown #408030
 ..0..
 .....
 
-tree_wall ;
-darkbrown #306020 #204010
-.211.
-11121
-21112
-12212
-.122.
+tree_wall_u
+darkbrown #242 #122
+.....
+.....
+.....
+.112.
+11222
 
-tree_wall_f
-darkbrown #306020 #204010
-.111.
-12111
+tree_wall_l
+darkbrown #242 #122
+.....
+....1
+....1
+....1
+.....
+
+tree_wall_r
+darkbrown #242 #122
+.....
+2....
+2....
+2....
+.....
+
+tree_wall ;
+darkbrown #242 #122
+11112
+12121
 20212
 20120
-.220.
+.2202
 
-diamond $
+diamond
 orange white brown
 .110.
 11000
@@ -433,12 +658,12 @@ lightblue
 ..0..
 
 call_particle_0
-lightblue
+lightblue orange
 .....
 .....
 .....
 0...0
-.000.
+.0.0.
 
 call_particle_1
 lightblue
@@ -456,15 +681,20 @@ lightblue
 .....
 .....
 
+anim_done
+transparent
+
 =======
 LEGEND
 =======
 
 background = grass
-wall = stone_wall or cave_wall or cave_wall_f or tree_wall or tree_wall_f or gate or rock_wall or rock_wall_f
+rock_wall_any = rock_wall or rock_wall_f
+wall = stone_wall or cave_wall or cave_wall_f or tree_wall or gate or rock_wall_any
 ledge = cave_ledge or rock_ledge
-ground_item = gloves_item or axe_item or diamond or candle_item
-held_item = gloves or axe or candle_unlit or candle_lit
+ground_item = gloves_item or axe_item or diamond or candle_item or hair_item
+hair = hair_held or hair_l or hair_r or hair_u
+held_item = gloves or axe or candle_unlit or candle_lit or hair_held
 sheep_wander = sheep_r or sheep_l or sheep_d or sheep_u
 sheep_follow = sheep_f_r or sheep_f_l or sheep_f_d or sheep_f_u
 sheep = sheep_wander or sheep_follow
@@ -484,10 +714,33 @@ c = cave_floor and candle_item
 1 = sheep_r and dirt
 2 = rock and dirt
 3 = cave_ledge and cave_floor
+4 = hair_item
 call = call_r or call_l or call_u or call_d
 particle = call_particle_0 or call_particle_1 or call_particle_2
 & = sheep_r
 p = player
+| = rock_wall and dirt
+~ = water_d_0
+! = water_u_0
+@ = water_r_0
+% = water_l_0
+^ = water_shallows and water_d_0
+water_d = water_d_0 or water_d_1
+water_u = water_u_0 or water_u_1
+water_r = water_r_0 or water_r_1
+water_l = water_l_0 or water_l_1
+water = water_d or water_u or water_r or water_l
+water_cover = water_cover_deep or water_cover_shallow
+. = grass
+- = grass_fold
+, = cave_floor
+' = dirt
+v = rock_ledge
+# = stone_wall
+\ = gate
+* = rock
+t = tree
+$ = diamond
 
 =======
 SOUNDS
@@ -532,19 +785,40 @@ COLLISIONLAYERS
 ================
 
 background
-cave_floor, dirt, grass_fold, dirt_grass
+cave_floor, dirt, grass_fold
+tree_ground, tree_edge
+dirt_edge
 tree_stump, ledge
+water
+water_edge_r
+water_edge_l
+water_edge_u
+water_edge_d
+water_shallows
 ground_item
 obstacle
 sheep_f_np_any
-call
-particle
 slash_x
+hair
 gloves
 axe
 candle_unlit
 candle_lit
+water_cover
+particle
+
+rock_wall_u
+rock_wall_l
+rock_wall_r
+tree_wall_u
+tree_wall_l
+tree_wall_r
+tree_u
+
 dark
+call
+
+anim_done
 
 ======
 RULES
@@ -559,11 +833,45 @@ RULES
 (this messes up editing)
 
 down [ cave_wall | no wall ] -> [ cave_wall_f | ]
-down [ tree_wall | no wall ] -> [ tree_wall_f | ]
-down [ rock_wall | no wall ] -> [ rock_wall_f | ]
 
-(dirt grass transition)
-[ dirt | grass no wall no dirt no cave_floor ] -> [ dirt | dirt_grass ]
+down [ rock_wall | no rock_wall_any ] -> [ rock_wall_f | ]
+up [ rock_wall_any | no rock_wall ] -> [ rock_wall_any | rock_wall_u ]
+right [ no rock_wall_any no ledge | rock_wall_any ] -> [ rock_wall_l | rock_wall_any ]
+right [ rock_wall_any | no rock_wall_any no ledge ] -> [ rock_wall_any | rock_wall_r ]
+
+up [ tree_wall | ] -> [ tree_wall | tree_wall_u ]
+right [ no tree_wall | tree_wall ] -> [ tree_wall_l | tree_wall ]
+right [ tree_wall | no tree_wall ] -> [ tree_wall | tree_wall_r ]
+
+right [ water | no water ] -> [ water | water_edge_r ]
+left [ water | no water ] -> [ water | water_edge_l ]
+up [ water | no water ] -> [ water | water_edge_u ]
+down [ water | no water ] -> [ water | water_edge_d ]
+
+(water anim)
+[ water_d_1 no anim_done ] -> [ water_d_0 anim_done ]
+[ water_d_0 no anim_done ] -> [ water_d_1 anim_done ]
+[ water_u_1 no anim_done ] -> [ water_u_0 anim_done ]
+[ water_u_0 no anim_done ] -> [ water_u_1 anim_done ]
+[ water_r_1 no anim_done ] -> [ water_r_0 anim_done ]
+[ water_r_0 no anim_done ] -> [ water_r_1 anim_done ]
+[ water_l_1 no anim_done ] -> [ water_l_0 anim_done ]
+[ water_l_0 no anim_done ] -> [ water_l_1 anim_done ]
+[ anim_done ] -> [ ]
+
+late [ creature water no water_shallows ] -> [ creature water water_cover_deep ]
+late [ creature water water_shallows ] -> [ creature water water_shallows water_cover_shallow ]
+late [ water_cover no creature ] -> [ ]
+
+(tree top)
+late up [ tree | ] -> [ tree | tree_u ]
+late up [ no tree | tree_u ] -> [ | ]
+
+(ground transitions)
+[ dirt | no wall no dirt no cave_floor ] -> [ dirt | dirt_edge ]
+[ tree_wall ] -> [ tree_wall tree_ground ]
+[ tree_wall | no tree_ground ] -> [ tree_wall | tree_ground ]
+[ tree_ground | no tree_ground ] -> [ tree_ground | tree_edge ]
 
 (tree growth)
 [ tree_stump_5 no obstacle ] -> [ tree ]
@@ -582,12 +890,6 @@ down [ rock_wall | no wall ] -> [ rock_wall_f | ]
 
 [ > player axe | tree ] -> [ player axe | tree slash_x ] sfx1 again
 ([ > player axe | sheep ] -> [ player axe | sheep slash_x ] sfx2 again)
-
-(
-(candle action)
-[ action player candle_lit ] -> [ player candle_unlit ] sfx4
-[ action player candle_unlit ] -> [ player candle_lit ] sfx3
-)
 
 (sheep start follow (before release so it works))
 right [ player | sheep no sheep_follow ] -> [ player | sheep_f_l ]
@@ -608,23 +910,35 @@ down [ action player | no obstacle ] -> [ action player | call_u ]
 right [ action player | no obstacle ] -> [ action player | call_l ]
 left [ action player | no obstacle ] -> [ action player | call_r ]
 
-up [ call_d no sheep | no call_d no call_blocker ] -> [ | call_d ]
-down [ call_u no sheep | no call_u no call_blocker ] -> [ | call_u ]
-right [ call_l no sheep | no call_l no call_blocker ] -> [ | call_l ]
-left [ call_r no sheep | no call_r no call_blocker ] -> [ | call_r ]
+up [ call_d no sheep | no call_d no call_blocker ] -> [ call_d | call_d ]
+down [ call_u no sheep | no call_u no call_blocker ] -> [ call_u | call_u ]
+right [ call_l no sheep | no call_l no call_blocker ] -> [ call_l | call_l ]
+left [ call_r no sheep | no call_r no call_blocker ] -> [ call_r | call_r ]
 
 up [ call_u sheep ] -> [ call_particle_0 sheep_u ]
 down [ call_d sheep ] -> [ call_particle_0 sheep_d ]
 right [ call_r sheep ] -> [ call_particle_0 sheep_r ]
 left [ call_l sheep ] -> [ call_particle_0 sheep_l ]
 
+(do it again late - sheep walks onto call)
+late up [ call_u sheep ] -> [ call_particle_0 sheep_u ]
+late down [ call_d sheep ] -> [ call_particle_0 sheep_d ]
+late right [ call_r sheep ] -> [ call_particle_0 sheep_r ]
+late left [ call_l sheep ] -> [ call_particle_0 sheep_l ]
+
 (if sheep walks onto call)
-late [ call sheep ] -> [ sheep ]
+(late [ call sheep ] -> [ sheep ])
 
 right [ action player | sheep_follow ] -> [ action player | sheep_r ]
 left [ action player | sheep_follow ] -> [ action player | sheep_l ]
 up [ action player | sheep_follow ] -> [ action player | sheep_u ]
 down [ action player | sheep_follow ] -> [ action player | sheep_d ]
+
+(candle action - after call because they both go)
+[ > player no cave_floor | cave_floor ] -> [ > player candle_lit | cave_floor ]
+[ > player candle_lit cave_floor | no cave_floor ] -> [ > player candle_unlit cave_floor | ]
+[ action player cave_floor candle_lit ] -> [ player cave_floor candle_unlit ] sfx4
+[ action player cave_floor candle_unlit ] -> [ player cave_floor candle_lit ] sfx3
 
 (sheep in fold)
 up [ sheep grass_fold | stone_wall ] -> [ sheep_in_fold grass_fold | stone_wall ] checkpoint
@@ -662,13 +976,33 @@ late [ sheep_f_np_any ] -> []
 (ledge)
 down [ creature ledge | no obstacle ] -> [ > creature ledge | ]
 
+(cancel sheep_follow on stationary player (for water))
+[ > sheep_follow | stationary player ] -> [ sheep_follow | player ]
+
+(water)
+down [ stationary creature water_d_0 water_shallows ] -> [ > creature water_d_0 water_shallows ]
+down [ creature water_d no water_shallows ] -> [ > creature water_d ]
+up [ stationary creature water_u_0 water_shallows ] -> [ > creature water_u_0 water_shallows ]
+up [ creature water_u no water_shallows ] -> [ > creature water_u ]
+right [ stationary creature water_r_0 water_shallows ] -> [ > creature water_r_0 water_shallows ]
+right [ creature water_r no water_shallows ] -> [ > creature water_r ]
+left [ stationary creature water_l_0 water_shallows ] -> [ > creature water_l_0 water_shallows ]
+left [ creature water_l no water_shallows ] -> [ > creature water_l ]
+
 (item pickup)
 late [ player gloves_item ] -> [ player gloves ] sfx0
 late [ player axe_item ] -> [ player axe ] sfx5
 late [ player candle_item ] -> [ player candle_lit ] sfx3
+late [ player hair_item ] -> [ player hair_held ]
 
 (ensure held items stay held)
 late [ player | ... | held_item ] -> [ player held_item | ... | ]
+
+late right [ | player hair_held | ] -> [ hair_l | player hair_held | hair_r ]
+late up [ player hair_held | ] -> [ player hair_held | hair_u ]
+late right [ hair_l | no hair_held ] -> [ | ]
+late right [ no hair_held | hair_r ] -> [ | ]
+late up [ no hair_held | hair_u ] -> [ | ]
 
 (let there be...candles!)
 late [ light dark ] -> [ light dark_0 ]
@@ -694,9 +1028,9 @@ LEVELS
 ;;;;;;..'''''''|
 ;;........'''|||
 ;.......||v|||||
-;......*'''''''|
-;..*p.g.'''''''|
-;;.......''''''|
+;......*''''1''|
+;...p.g.'''''''|
+;;.....*.''''''|
 ;........'|'''||
 ;;.....$..||||||
 ;;;.......||||||
