@@ -177,7 +177,45 @@ black
 dark_x
 black
 
-player
+gran_young
+#555 brown #eee #deb040
+.000.
+.010.
+13331
+13331
+.333.
+
+gran_old
+#ccc brown #eee #deb040 orange
+.....
+.000.
+10101
+13331
+.333.
+
+diag
+black white
+.....
+00000
+10101
+00000
+.....
+
+gran_diag_1_1
+transparent
+
+gran_diag_1_2
+transparent
+
+player_girl
+black brown #eee #35f
+.....
+..0..
+.010.
+13331
+.333.
+
+player_adult
 black brown #eee #35f
 .000.
 .010.
@@ -419,43 +457,68 @@ darkgray #444 gray
 
 gate_open
 brown darkbrown
-00...
-1.000
-1.1.1
-111.1
-..111
+0....
+000..
+1.1..
+1.1..
+111..
+
+gate_open_l
+brown darkbrown
+...00
+...1.
+...1.
+...11
+.....
 
 gate_closed_top
 brown darkbrown
 .....
 .....
-1....
-01...
-01...
+.1...
+.01..
+.01..
 
 gate_closed_mid
 brown darkbrown
-01...
-01...
-01...
-01...
-11...
+.01..
+.01..
+.01..
+.01..
+.11..
 
 gate_post_top
-brown darkbrown
-.....
-0....
-1....
-1....
-1....
+brown darkbrown darkgray #444 gray
+.242.
+.003.
+.113.
+.113.
+.11..
 
 gate_post_bot
+brown darkbrown darkgray #444 gray
+401..
+211..
+211..
+21...
+3....
+
+farm_gate_closed_v
 brown darkbrown
-01...
-11...
-1....
-1....
-.....
+.01..
+.01..
+.01..
+.01..
+.11..
+
+farm_gate_closed_h
+brown darkbrown
+00000
+11..1
+1.1.1
+1..11
+11111
+
 
 rock
 gray darkgray
@@ -759,18 +822,24 @@ transparent
 gate_change
 transparent
 
+player_adjacent
+transparent
+
 =======
 LEGEND
 =======
 
 background = grass
+player = player_girl or player_adult
+gran = gran_young or gran_old
 rock_wall_any = rock_wall or rock_wall_f
 tree_wall_any = tree_wall or tree_wall_f
 stone_wall_dir = stone_wall_r or stone_wall_l or stone_wall_u or stone_wall_d
 stone_wall_any = stone_wall_x or stone_wall_dir
 gate_post = gate_post_bot or gate_post_top
 gate = gate_open or gate_closed_mid
-wall = stone_wall_x or cave_wall or cave_wall_f or tree_wall_any or gate or rock_wall_any
+farm_gate = farm_gate_closed_v or farm_gate_closed_h
+wall = stone_wall_x or cave_wall or cave_wall_f or tree_wall_any or gate or gate_post or rock_wall_any or farm_gate
 ledge = cave_ledge or rock_ledge
 ground_item = gloves_item or axe_item or diamond or candle_item or hair_item
 hair = hair_held or hair_l or hair_r or hair_u
@@ -781,7 +850,7 @@ sheep = sheep_wander or sheep_follow or sheep_in_fold
 sheep_f_np_any = sheep_f_np_0 or sheep_f_np_1 or sheep_f_np_2 or sheep_f_np
 creature = sheep or player
 pushable = rock
-obstacle = player or wall or rock or tree or sheep or pushable or sheep_in_fold
+obstacle = player or wall or rock or tree or sheep or pushable or sheep_in_fold or gran
 call_blocker = wall or rock or tree
 light = candle_item or candle_lit
 ] = cave_floor and cave_wall
@@ -789,7 +858,12 @@ dark = dark_0 or dark_1 or dark_2 or dark_3 or dark_4 or dark_x
 tree_stump = tree_stump_0 or tree_stump_1 or tree_stump_2 or tree_stump_3 or tree_stump_4 or tree_stump_5
 g = gloves_item
 a = axe_item
+b = player_girl
 c = cave_floor and candle_item
+d = gran_young and gran_diag_1_1
+e = gran_old
+f = farm_gate_closed_v
+h = farm_gate_closed_h
 0 = sheep_r and cave_floor
 1 = sheep_r and dirt
 2 = rock and dirt
@@ -798,7 +872,7 @@ c = cave_floor and candle_item
 call = call_r or call_l or call_u or call_d
 particle = call_particle_0 or call_particle_1 or call_particle_2
 & = sheep_r
-p = player
+p = player_adult
 | = rock_wall and dirt
 ~ = water_d_0
 ! = water_u_0
@@ -817,11 +891,12 @@ water_cover = water_cover_deep or water_cover_shallow
 ' = dirt
 v = rock_ledge
 # = stone_wall_x
-\ = gate_open and gate_post_bot
+\ = gate_open
 * = rock
 t = tree
 $ = diamond
 ; = tree_wall
+diag_any = gran_diag_1_1 or gran_diag_1_2
 
 =======
 SOUNDS
@@ -876,10 +951,15 @@ water_edge_l
 water_edge_u
 water_edge_d
 water_shallows
-gate_post
-gate_closed_top
+gate_open_l
+
 ground_item
 obstacle
+stone_wall_r
+stone_wall_l
+stone_wall_u
+stone_wall_d
+gate_closed_top
 sheep_f_np_any
 slash_x
 hair
@@ -890,10 +970,6 @@ candle_lit
 water_cover
 particle
 
-stone_wall_r
-stone_wall_l
-stone_wall_u
-stone_wall_d
 rock_wall_u
 rock_wall_l
 rock_wall_r
@@ -907,9 +983,12 @@ call_d
 call_u
 call_r
 call_l
+diag
 
 anim_done
 gate_change
+diag_any
+player_adjacent
 
 ======
 RULES
@@ -942,10 +1021,20 @@ down [ water | no water ] -> [ water | water_edge_d ]
 
 right [ stone_wall_x | stone_wall_x ] -> [ stone_wall_x stone_wall_r | stone_wall_x stone_wall_l]
 down [ stone_wall_x | stone_wall_x ] -> [ stone_wall_x stone_wall_d | stone_wall_x stone_wall_u]
+(
 right [ stone_wall_l no stone_wall_u no stone_wall_d | no stone_wall_any ] -> [ stone_wall_l stone_wall_r | ]
 left [ stone_wall_r no stone_wall_u no stone_wall_d | no stone_wall_any ] -> [ stone_wall_l stone_wall_r | ]
+)
 
+(gate post setup)
+right [ stone_wall_any | gate_open ] -> [ gate_post_bot | gate_open ]
 up [ gate_post_bot | | no gate_post_top ] -> [ gate_post_bot | | gate_post_top ]
+right [ stone_wall_x | gate_post_bot ] -> [ stone_wall_x stone_wall_r | gate_post_bot ]
+down [ stone_wall_x | gate_post_top ] -> [ stone_wall_x stone_wall_d | gate_post_top ]
+( farm gates )
+right [ stone_wall_x | farm_gate_closed_h ] -> [ stone_wall_x stone_wall_r | farm_gate_closed_h ]
+left [ stone_wall_x | farm_gate_closed_h ] -> [ stone_wall_x stone_wall_l | farm_gate_closed_h ]
+down [ stone_wall_x | farm_gate_closed_v ] -> [ gate_post_top gate_closed_top | farm_gate_closed_v ]
 
 (water anim)
 [ water_d_1 no anim_done ] -> [ water_d_0 anim_done ]
@@ -971,6 +1060,15 @@ late up [ no tree | tree_u ] -> [ | ]
 [ tree_wall ] -> [ tree_wall tree_ground ]
 [ tree_wall | no tree_ground ] -> [ tree_wall | tree_ground ]
 [ tree_ground | no tree_ground ] -> [ tree_ground | tree_edge ]
+
+(dialogue)
+late up [ no player_adjacent | diag ] -> [ | ]
+late [ player_adjacent ] -> []
+late [ player | diag_any ] -> [ player | diag_any player_adjacent ]
+late up [ player_adjacent | no diag ] -> [ | diag ]
+
+[ > player | gran_diag_1_1 ] -> [ player | gran_diag_1_2 ] message Gran: "Get close to a sheep and she'll follow you. Press X to send her on her way"
+[ > player | gran_diag_1_2 ] -> [ player | gran_diag_1_1 ] message Gran: "Don't forget to close the gate once all the sheep are inside"
 
 (tree growth)
 [ tree_stump_5 no obstacle ] -> [ tree ]
@@ -1009,7 +1107,7 @@ down [ action player | no obstacle ] -> [ action player | call_u ]
 right [ action player | no obstacle ] -> [ action player | call_l ]
 left [ action player | no obstacle ] -> [ action player | call_r ]
 )
-[ action player no call ] -> [ action player call_d call_u call_r call_l ]
+[ action player_adult no call ] -> [ action player_adult call_d call_u call_r call_l ]
 
 up [ call_d no sheep | no call_d no call_blocker ] -> [ call_d | call_d ]
 down [ call_u no sheep | no call_u no call_blocker ] -> [ call_u | call_u ]
@@ -1081,8 +1179,19 @@ down [ creature ledge | no obstacle ] -> [ > creature ledge | ]
 [ > player | gate_open ] -> [ player | gate_open gate_change ]
 [ > player | gate_closed_mid ] -> [ player | gate_closed_mid gate_change ]
 
-late up [ gate_open gate_change | no obstacle | ] -> [ | gate_closed_mid | gate_closed_top ]
-late down [ gate_closed_top | gate_closed_mid gate_change | no obstacle ] -> [ | | gate_open ]
+( close gate )
+late right [ gate_post_bot | gate_open gate_change ] -> [ gate_post_bot gate_change | gate_open gate_change ]
+( remove gate change from post to signal success (no obstacle))
+late up [ gate_post_bot gate_change | no obstacle | ] -> [ gate_post_bot | gate_closed_mid | gate_closed_top ]
+late right [ gate_post_bot no gate_change gate_open_l | gate_open gate_change ] -> [ gate_post_bot | ]
+
+( open gate )
+late down [ gate_closed_mid gate_change | gate_post_bot ] -> [ gate_closed_mid gate_change | gate_post_bot gate_change ]
+( remove gate change from post to signal success (no obstacle))
+late right [ gate_post_bot gate_change | no obstacle ] -> [ gate_post_bot gate_open_l | gate_open]
+late up [ gate_post_bot no gate_change | gate_closed_mid gate_change | gate_closed_top ] -> [ gate_post_bot | | ]
+
+right [ no gate_open_l | gate_open ] -> [ gate_open_l | gate_open ]
 late [ gate_change ] -> []
 
 (cancel sheep_follow on stationary player (for water))
@@ -1131,22 +1240,60 @@ some gate_closed_mid
 LEVELS
 =======
 
-..;;;;||||||||||
-.;;;;;.&...''''|
-;;;;;.....'''''|
-;;;;;;...''''''|
-;;;;;;..'''''''|
-;;...|||..'''|||
-;......|||v|||||
-;.......''''1''|
-;...p...'''''''|
-;;.###...''''''|
-;..#--...'|'''||
-;;.###\...||||||
-;;;.......||||||
-;;;;;.;..;||||||
-;;;;;;;;;;||||||
-;;;;;;;;;;||||||
+message Gran: "There are a couple of sheep left to round up, would you see them safely home, dear?"
+
+;;;;..........;;
+;;;......#####.;
+;;.#######&..##.
+..##..........##
+..#&.&d.b......#
+.####..........#
+.#--#..........#
+.#--...........f
+.####\.........#
+...#...........#
+...#..........##
+;..#..........#.
+;..##..###....#.
+;;..#..#.#..&##.
+;;..#hh#.#####..
+;;..#..#.......;
+
+message Gran: "Some of the sheep have wandered off around the farm. Bring them home please, dear."
+
+;;;;..........;;|||||||.|||||~||
+;;;......#####.;;;;&..#h#||||~||
+;;.#######...##.;;...........~||
+..##..........##;;...........~||
+..#.....b......#;;...........~||
+.#####.........#;;;..........~||
+.#---#.........##'...;.......~||
+.#---........'''''''.........~||
+.#####\........##'''''.......~||
+...#......*....#;'|v|''''....~||
+...#..........##;;|'|||''....~||
+;..#..........#.;;1''2||'....~||
+;..##.'###....#.;;'''''|'....~||
+;;..#''#.#..&##.;;'''|v|'....~||
+;;..#''#.#####..;;;|2|'''....~||
+;;..#''#......;;;;||||||'||||~||
+;;..#.'#..;.;;;;;;||||||'||||~||
+;;.##.'#..;;;;;;;;;.....'.~%%%||
+;;.#...#######;;;;.....''.^''''|
+;;;#.........####.......''^''''|
+;;;#.................e....~''''|
+'''f'..........##.........~.''.|
+;;;#..........##;;.~%%%%%%%.'..|
+;;;##..;......#;;;;~........'..|
+;;;;#.........#;;;;~........'..|
+;;;;#.........#;;;;~...........|
+;;;.#.........#;;;;~...........|
+;;..##.......##...t^..''''.....|
+;;;..#########..;;;2..'........|
+;;;;.........;.;;;;~;.';.......;
+;;;;;;;;.;.;;;.;;;;~;;.;;.;;;;;;
+;;;;;;;;;;;;;;t;;;;~;;t;;;;;;;;;
+
 
 ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]||||||||||||||||||||||||||||||||
 ]]]]]]]]]]]]]]]]],,,],]],,,,,,]]|||||||||||||||||'''''|'''||||||
