@@ -47,10 +47,10 @@ tree_ground
 
 tree_edge
 #582 #472
-0.01.
+..01.
 1...0
 ..11.
-110.1
+1.0.1
 0..00
 
 grass_fold
@@ -205,6 +205,24 @@ gran_diag_1_1
 transparent
 
 gran_diag_1_2
+transparent
+
+gran_diag_2_1
+transparent
+
+gran_diag_2_2
+transparent
+
+gran_diag_3_1
+transparent
+
+gran_diag_3_2
+transparent
+
+gran_diag_4_1
+transparent
+
+gran_diag_4_2
 transparent
 
 player_girl
@@ -825,6 +843,9 @@ transparent
 player_adjacent
 transparent
 
+whistle
+transparent
+
 =======
 LEGEND
 =======
@@ -843,7 +864,7 @@ wall = stone_wall_x or cave_wall or cave_wall_f or tree_wall_any or gate or gate
 ledge = cave_ledge or rock_ledge
 ground_item = gloves_item or axe_item or diamond or candle_item or hair_item
 hair = hair_held or hair_l or hair_r or hair_u
-held_item = gloves or axe or candle_unlit or candle_lit or hair_held
+held_item = gloves or axe or candle_unlit or candle_lit or hair_held or whistle
 sheep_wander = sheep_r or sheep_l or sheep_d or sheep_u
 sheep_follow = sheep_f_r or sheep_f_l or sheep_f_d or sheep_f_u
 sheep = sheep_wander or sheep_follow or sheep_in_fold
@@ -858,12 +879,13 @@ dark = dark_0 or dark_1 or dark_2 or dark_3 or dark_4 or dark_x
 tree_stump = tree_stump_0 or tree_stump_1 or tree_stump_2 or tree_stump_3 or tree_stump_4 or tree_stump_5
 g = gloves_item
 a = axe_item
-b = player_girl
+b = player_girl and whistle
 c = cave_floor and candle_item
 d = gran_young and gran_diag_1_1
-e = gran_old
+e = gran_young and gran_diag_2_1
 f = farm_gate_closed_v
 h = farm_gate_closed_h
+i = gran_old and gran_diag_3_1
 0 = sheep_r and cave_floor
 1 = sheep_r and dirt
 2 = rock and dirt
@@ -872,7 +894,7 @@ h = farm_gate_closed_h
 call = call_r or call_l or call_u or call_d
 particle = call_particle_0 or call_particle_1 or call_particle_2
 & = sheep_r
-p = player_adult
+p = player_adult and whistle
 | = rock_wall and dirt
 ~ = water_d_0
 ! = water_u_0
@@ -896,14 +918,13 @@ v = rock_ledge
 t = tree
 $ = diamond
 ; = tree_wall
-diag_any = gran_diag_1_1 or gran_diag_1_2
+diag_any = gran_diag_1_1 or gran_diag_1_2 or gran_diag_2_1 or gran_diag_2_2 or gran_diag_3_1 or gran_diag_3_2 or gran_diag_4_1 or gran_diag_4_2
 
 =======
 SOUNDS
 =======
 
-(rock move)
-sfx6 36772507
+
 (rock clatter 11043302)
 (player action 75964507)
 
@@ -925,6 +946,17 @@ sfx4 87047508
 (get axe)
 sfx5 80552908
 
+(rock move)
+sfx6 36772507
+
+(whistle)
+sfx7 96102308 (22982103) (52172508)
+
+
+(sheep follow)
+sfx9 24524908
+
+(11646308)
 (spooooky echo 24371308)
 
 (spooky shudder 92370508)
@@ -962,11 +994,14 @@ stone_wall_d
 gate_closed_top
 sheep_f_np_any
 slash_x
+
 hair
 gloves
 axe
 candle_unlit
 candle_lit
+whistle
+
 water_cover
 particle
 
@@ -1070,6 +1105,9 @@ late up [ player_adjacent | no diag ] -> [ | diag ]
 [ > player | gran_diag_1_1 ] -> [ player | gran_diag_1_2 ] message Gran: "Get close to a sheep and she'll follow you. Press X to send her on her way"
 [ > player | gran_diag_1_2 ] -> [ player | gran_diag_1_1 ] message Gran: "Don't forget to close the gate once all the sheep are inside"
 
+[ > player | gran_diag_2_1 ] -> [ player | gran_diag_2_2 ] message Gran: "Press X to whistle. Nearby sheep will come toward you"
+[ > player | gran_diag_2_2 ] -> [ player | gran_diag_2_1 ] message Gran: "Don't forget to close the gate once she's settled down inside"
+
 (tree growth)
 [ tree_stump_5 no obstacle ] -> [ tree ]
 [ tree_stump_4 ] -> [ tree_stump_5 ]
@@ -1107,23 +1145,23 @@ down [ action player | no obstacle ] -> [ action player | call_u ]
 right [ action player | no obstacle ] -> [ action player | call_l ]
 left [ action player | no obstacle ] -> [ action player | call_r ]
 )
-[ action player_adult no call ] -> [ action player_adult call_d call_u call_r call_l ]
+[ action player whistle no call ] -> [ action player whistle call_d call_u call_r call_l ] sfx7
 
 up [ call_d no sheep | no call_d no call_blocker ] -> [ call_d | call_d ]
 down [ call_u no sheep | no call_u no call_blocker ] -> [ call_u | call_u ]
 right [ call_l no sheep | no call_l no call_blocker ] -> [ call_l | call_l ]
 left [ call_r no sheep | no call_r no call_blocker ] -> [ call_r | call_r ]
 
-up [ call_u sheep no sheep_follow no sheep_u ] -> [ call_particle_0 sheep_u ]
-down [ call_d sheep no sheep_follow no sheep_d ] -> [ call_particle_0 sheep_d ]
-right [ call_r sheep no sheep_follow no sheep_r ] -> [ call_particle_0 sheep_r ]
-left [ call_l sheep no sheep_follow no sheep_l ] -> [ call_particle_0 sheep_l ]
+up [ call_u sheep no sheep_follow no sheep_u ] -> [ call_particle_0 sheep_u ] sfx9
+down [ call_d sheep no sheep_follow no sheep_d ] -> [ call_particle_0 sheep_d ] sfx9
+right [ call_r sheep no sheep_follow no sheep_r ] -> [ call_particle_0 sheep_r ] sfx9
+left [ call_l sheep no sheep_follow no sheep_l ] -> [ call_particle_0 sheep_l ] sfx9
 
 (do it again late - sheep walks onto call)
-late up [ call_u sheep no sheep_follow no sheep_u ] -> [ call_particle_0 sheep_u ]
-late down [ call_d sheep no sheep_follow no sheep_d ] -> [ call_particle_0 sheep_d ]
-late right [ call_r sheep no sheep_follow no sheep_r ] -> [ call_particle_0 sheep_r ]
-late left [ call_l sheep no sheep_follow no sheep_l ] -> [ call_particle_0 sheep_l ]
+late up [ call_u sheep no sheep_follow no sheep_u ] -> [ call_particle_0 sheep_u ] sfx9
+late down [ call_d sheep no sheep_follow no sheep_d ] -> [ call_particle_0 sheep_d ] sfx9
+late right [ call_r sheep no sheep_follow no sheep_r ] -> [ call_particle_0 sheep_r ] sfx9
+late left [ call_l sheep no sheep_follow no sheep_l ] -> [ call_particle_0 sheep_l ] sfx9
 
 (if sheep walks onto call)
 (late [ call sheep ] -> [ sheep ])
@@ -1183,13 +1221,13 @@ down [ creature ledge | no obstacle ] -> [ > creature ledge | ]
 late right [ gate_post_bot | gate_open gate_change ] -> [ gate_post_bot gate_change | gate_open gate_change ]
 ( remove gate change from post to signal success (no obstacle))
 late up [ gate_post_bot gate_change | no obstacle | ] -> [ gate_post_bot | gate_closed_mid | gate_closed_top ]
-late right [ gate_post_bot no gate_change gate_open_l | gate_open gate_change ] -> [ gate_post_bot | ]
+late right [ gate_post_bot no gate_change gate_open_l | gate_open gate_change ] -> [ gate_post_bot | ] sfx6
 
 ( open gate )
 late down [ gate_closed_mid gate_change | gate_post_bot ] -> [ gate_closed_mid gate_change | gate_post_bot gate_change ]
 ( remove gate change from post to signal success (no obstacle))
 late right [ gate_post_bot gate_change | no obstacle ] -> [ gate_post_bot gate_open_l | gate_open]
-late up [ gate_post_bot no gate_change | gate_closed_mid gate_change | gate_closed_top ] -> [ gate_post_bot | | ]
+late up [ gate_post_bot no gate_change | gate_closed_mid gate_change | gate_closed_top ] -> [ gate_post_bot | | ] sfx6
 
 right [ no gate_open_l | gate_open ] -> [ gate_open_l | gate_open ]
 late [ gate_change ] -> []
@@ -1259,40 +1297,30 @@ message Gran: "There are a couple of sheep left to round up, would you see them 
 ;;..#hh#.#####..
 ;;..#..#.......;
 
-message Gran: "Some of the sheep have wandered off around the farm. Bring them home please, dear."
+message Gran: "A sheep is stuck up on a rocky ledge, can you coax her down?"
 
-;;;;..........;;|||||||.|||||~||
-;;;......#####.;;;;&..#h#||||~||
-;;.#######...##.;;...........~||
-..##..........##;;...........~||
-..#.....b......#;;...........~||
-.#####.........#;;;..........~||
-.#---#.........##'...;.......~||
-.#---........'''''''.........~||
-.#####\........##'''''.......~||
-...#......*....#;'|v|''''....~||
-...#..........##;;|'|||''....~||
-;..#..........#.;;1''2||'....~||
-;..##.'###....#.;;'''''|'....~||
-;;..#''#.#..&##.;;'''|v|'....~||
-;;..#''#.#####..;;;|2|'''....~||
-;;..#''#......;;;;||||||'||||~||
-;;..#.'#..;.;;;;;;||||||'||||~||
-;;.##.'#..;;;;;;;;;.....'.~%%%||
-;;.#...#######;;;;.....''.^''''|
-;;;#.........####.......''^''''|
-;;;#.................e....~''''|
-'''f'..........##.........~.''.|
-;;;#..........##;;.~%%%%%%%.'..|
-;;;##..;......#;;;;~........'..|
-;;;;#.........#;;;;~........'..|
-;;;;#.........#;;;;~...........|
-;;;.#.........#;;;;~...........|
-;;..##.......##...t^..''''.....|
-;;;..#########..;;;2..'........|
-;;;;.........;.;;;;~;.';.......;
-;;;;;;;;.;.;;;.;;;;~;;.;;.;;;;;;
-;;;;;;;;;;;;;;t;;;;~;;t;;;;;;;;;
+|||||||||v||||||
+|||2'1'''''''|||
+|||2'''''''''2||
+#|||2'''''''22||
+#'||||||v|||||||
+#.'''''''''''|||
+f''''''''''.'''|
+#.####.'''.....t
+#.#-.#..''.b..;;
+#.#.....''...;;;
+######\.''d.;;;;
+;;;....'''.;;;;;
+;;;....''..;;;;;
+;;;;...''.;;;;;;
+;;;;;;.''.;;;;;;
+;;;;;;#hh#;;;;;;
+
+message Gran: "I'm getting too old to chase sheep around anymore..."
+
+message Gran: "Can I count on you to bring them all home?"
+
+message Gran: "I'll be relaxing down by the river if you need me."
 
 
 ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]||||||||||||||||||||||||||||||||
@@ -1359,3 +1387,60 @@ message Gran: "Some of the sheep have wandered off around the farm. Bring them h
 ;;;...;;;;;;;;;;;;;;;;;;t...;..;;;;;;.;..;||||||]]]]],]],,]]],]]
 ;;;;;;;;;;;;;;;;;;;;;;;;;.tt..;;;;;;;;;;;;||||||]]],,,,,,,,,]]]]
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;||||||]]]]]]]]]]]]]]]]
+
+(
+
+|||||#...#|~||||
+.|||.##hh#.~21'|
+|###.......~''';
+#-.#.......~''';
+#..........~''';
+####\......~''';
+#..........~''';
+#..........~2'';
+#..........~'';;
+f..d.......~;;;;
+#....b.....^;;;;
+;..........^;;;;
+;..........*;;;;
+;;;.......;~;;;;
+;;;;......;~;;;;
+;;;;;;#hh#;~;;;;
+
+
+message Gran: "Some of the sheep have wandered off around the farm. Bring them home please, dear."
+
+;;;;..........;;|||||||.|||||~||
+;;;......#####.;;;;&..#h#||||~||
+;;.#######...##.;;...........~||
+..##..........##;;...........~||
+..#.....b......#;;...........~||
+.#####.........#;;;..........~||
+.#---#.........##'...;.......~||
+.#---........'''''''.........~||
+.#####\........##'''''.......~||
+...#......*....#;'|v|''''....~||
+...#..........##;;|'|||''....~||
+;..#..........#.;;1''2||'....~||
+;..##.'###....#.;;'''''|'....~||
+;;..#''#.#..&##.;;'''|v|'....~||
+;;..#''#.#####..;;;|2|'''....~||
+;;..#''#......;;;;||||||'||||~||
+;;..#.'#..;.;;;;;;||||||'||||~||
+;;.##.'#..;;;;;;;;;.....'.~%%%||
+;;.#...#######;;;;.....''.^''''|
+;;;#.........####.......''^''''|
+;;;#.................e....~''''|
+'''f'..........##.........~.''.|
+;;;#..........##;;.~%%%%%%%.'..|
+;;;##..;......#;;;;~........'..|
+;;;;#.........#;;;;~........'..|
+;;;;#.........#;;;;~...........|
+;;;.#.........#;;;;~...........|
+;;..##.......##...t^..''''.....|
+;;;..#########..;;;2..'........|
+;;;;.........;.;;;;~;.';.......;
+;;;;;;;;.;.;;;.;;;;~;;.;;.;;;;;;
+;;;;;;;;;;;;;;t;;;;~;;t;;;;;;;;;
+
+)
